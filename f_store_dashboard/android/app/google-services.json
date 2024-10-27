@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "8525069954",
+    "project_id": "fstore-46707",
+    "storage_bucket": "fstore-46707.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8525069954:android:ff73e19a6898c66bbebe9b",
+        "android_client_info": {
+          "package_name": "com.example.f_store_dashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8525069954-ljcb0m6djqekjqr1m7b9r5n0jb7bec0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTBm_TOEfEzRiBrFNuUC3pLGc5MKFZAc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8525069954-ljcb0m6djqekjqr1m7b9r5n0jb7bec0d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "8525069954-etvgrevbf373dirbt9684stj6f9m0l88.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fstoreapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8525069954:android:4be45bafe0685906bebe9b",
+        "android_client_info": {
+          "package_name": "com.example.fstoreapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8525069954-tac1g0rd6em8kth0bl67klt2od0bd390.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fstoreapp",
+            "certificate_hash": "7a449302279b80aafa494653013315b32c96d75e"
+          }
+        },
+        {
+          "client_id": "8525069954-ljcb0m6djqekjqr1m7b9r5n0jb7bec0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTBm_TOEfEzRiBrFNuUC3pLGc5MKFZAc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8525069954-ljcb0m6djqekjqr1m7b9r5n0jb7bec0d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "8525069954-etvgrevbf373dirbt9684stj6f9m0l88.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fstoreapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
