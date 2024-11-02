@@ -1,0 +1,15 @@
+Do the following to add android fingerprint to your android app
+
+1. Download and install the Java Developer Kit (jdk.exe) EXE 
+2. On the command prompt, set the file path to the environment variables using this command 
+set PATH=C:\Program Files\Java\your-jdk-version\bin
+Or add the file path to the environment variables directly
+
+3. Then in the root of your project, run the following command to add android finger print to your flutter app
+keytool -list -V -keystore "\C:\Users\Username\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
+
+4. To make files transfers faster on the pc, open command prompt as an administrator and input the following command
+	netsh int tcp set global autotuninglevel=disabled    then open the services menu, look for Optimize drives change the option from manual to automatic and click on start
+
+	 SHA1: 7A:44:93:02:27:9B:80:AA:FA:49:46:53:01:33:15:B3:2C:96:D7:5E
+   SHA256: ED:07:24:71:5F:D2:33:F5:CE:40:BA:B8:15:2C:48:A3:CF:8F:49:3D:88:66:14:2B:7E:6B:95:71:C7:21:96:98

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "8525069954",
+    "project_id": "fstore-46707",
+    "storage_bucket": "fstore-46707.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8525069954:android:4be45bafe0685906bebe9b",
+        "android_client_info": {
+          "package_name": "com.example.fstoreapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8525069954-ljcb0m6djqekjqr1m7b9r5n0jb7bec0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTBm_TOEfEzRiBrFNuUC3pLGc5MKFZAc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8525069954-ljcb0m6djqekjqr1m7b9r5n0jb7bec0d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "8525069954-etvgrevbf373dirbt9684stj6f9m0l88.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fstoreapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
