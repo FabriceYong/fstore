@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fstoreapp/common/widgets/schimmers/shimmer_effect.dart';
 import 'package:fstoreapp/utils/constants/sizes.dart';
 
 class FRoundedImage extends StatelessWidget {
@@ -45,7 +47,15 @@ class FRoundedImage extends StatelessWidget {
               ? BorderRadius.circular(borderRadius)
               : BorderRadius.zero,
           child: isNetworkImage
-              ? Image.network(imageUrl, fit: fit)
+              ? CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: fit,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      FShimmerEffect(
+                          width: width ?? double.infinity,
+                          height: height ?? 150),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                )
               : Image.asset(
                   imageUrl,
                   fit: fit,

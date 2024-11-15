@@ -1,5 +1,7 @@
 import 'package:fstoreapp/data/repositories/categories/category_repository.dart';
+import 'package:fstoreapp/data/repositories/products_repository/products_repository.dart';
 import 'package:fstoreapp/features/shop/models/category_model.dart';
+import 'package:fstoreapp/features/shop/models/products_model.dart';
 import 'package:fstoreapp/utils/popups/snackbars.dart';
 import 'package:get/get.dart';
 
@@ -44,4 +46,17 @@ class CategoryController extends GetxController {
   /// -- Load selected category data
 
   /// Get Category or sub_category products
+  Future<List<ProductModel>> getCategoryProducts(
+      {required String categoryId, int limit = 4}) async {
+    try {
+      // Fetch limited (4) products against each subCategory
+      final products = await ProductsRepository.instance
+          .getProductsForCategory(categoryId: categoryId, limit: limit);
+      print(products);
+      return products;
+    } catch (e) {
+      Snackbars.errorSnackBar(title: 'Ohh Snap!', message: e.toString());
+      return [];
+    }
+  }
 }

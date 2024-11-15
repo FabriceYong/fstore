@@ -7,6 +7,7 @@ import 'package:fstoreapp/features/shop/screens/product_details/widgets/product_
 import 'package:fstoreapp/features/shop/screens/product_details/widgets/product_meta_data.dart';
 import 'package:fstoreapp/features/shop/screens/product_details/widgets/ratings_and_share.dart';
 import 'package:fstoreapp/features/shop/screens/product_reviews/product_reviews.dart';
+import 'package:fstoreapp/utils/constants/enums.dart';
 import 'package:fstoreapp/utils/constants/sizes.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,9 @@ class ProductDetails extends StatelessWidget {
         child: Column(
           children: [
             /// 1 - Product Image Slider
-            const FProductDetailsImageSlider(),
+            FProductDetailsImageSlider(
+              product: product,
+            ),
 
             /// 2 - Product Details
             Padding(
@@ -40,11 +43,18 @@ class ProductDetails extends StatelessWidget {
                   const FRatingsAndShare(),
 
                   /// Price, Title, Stock, & Brand
-                  const FProductMetaData(),
+                  FProductMetaData(
+                    product: product,
+                  ),
+
+                  const Gap(FSizes.spaceBtwItems),
 
                   /// -- Attributes
-                  const FProductAttributes(),
-                  const Gap(FSizes.spaceBtwSections),
+                  if (product.productType == ProductType.variable.toString())
+                    FProductAttributes(product: product),
+                  // FProductAttributes(product: product),
+                  if (product.productType == ProductType.variable.toString())
+                    const Gap(FSizes.spaceBtwSections),
 
                   /// -- Checkout button
                   SizedBox(
@@ -60,16 +70,17 @@ class ProductDetails extends StatelessWidget {
                     showActionButton: false,
                   ),
                   const Gap(FSizes.spaceBtwItems / 2),
-                  const ReadMoreText(
+                  ReadMoreText(
+                    textAlign: TextAlign.start,
                     trimLines: 2,
                     trimMode: TrimMode.Line,
                     trimCollapsedText: ' show more',
                     trimExpandedText: ' show less',
-                    moreStyle:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-                    lessStyle:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-                    'This is a Product description Iphone 15 Pro Max. This is a Product description Iphone 15 Pro Max. This is a Product description Iphone 15 Pro Max. This is a Product description Iphone 15 Pro Max.',
+                    moreStyle: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w800),
+                    lessStyle: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w800),
+                    product.description ?? '',
                   ),
 
                   /// -- Reviews

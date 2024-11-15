@@ -67,6 +67,8 @@ class FAnimationLoaderWidget extends StatelessWidget {
                 ),
               ),
             )
+          else
+            const SizedBox(),
         ],
       ),
     );

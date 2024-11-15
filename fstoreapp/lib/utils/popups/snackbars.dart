@@ -22,6 +22,7 @@ class Snackbars {
               color: Theme.of(Get.context!).brightness == Brightness.dark
                   ? FColors.darkGrey.withOpacity(.9)
                   : FColors.grey.withOpacity(.0)),
+          child: Text(message),
         ),
       ),
     );

@@ -35,7 +35,10 @@ class FImages {
   static const String hermanMillerLogo = "assets/icons/brands/herman-miller-logo.png";
   static const String ikeaLogo = "assets/icons/brands/ikea_logo.png";
   static const String acerlogo = "assets/icons/brands/acer_logo.png";
-
+  static const String samsungLogo = 'assets/icons/brands/samsung_logo.png';
+  static const String lgLogo = 'assets/icons/brands/lg-logo.png';
+  static const String sonyLogo = 'assets/icons/brands/sony_logo.png';
+  static const String tomiLogo = 'assets/icons/brands/tomi-logo.png';
   // -- Animations
   static const String productsIllustration = "assets/images/animations/sammy-line-workout.gif";
   static const String productsSaleIllustration = "assets/images/animations/sammy-line-sale.png";
@@ -145,10 +148,14 @@ class FImages {
   static const String productImage75 = "assets/images/products/slipper-product-2.png";
   static const String productImage76 = "assets/images/products/slipper-product-3.png";
   static const String productImage77= "assets/images/products/slipper-product.png";
-
-
-
-
+  static const String productImage78 = 'assets/images/products/Samsung-16-inch-Galax- Book4-img1.jpg';
+  static const String productImage79 =
+      'assets/images/products/Samsung-16-inch-Galax- Book4-img2.jpg';
+  static const String productImage80 = 'assets/images/products/Samsung-16-inch-Galax- Book4-img3.jpg';
+  static const String productImage81 = 'assets/images/products/Samsung-16-inch-Galax- Book4-img4.jpg';
+  static const String productImage82 = 'assets/images/products/Samsung-16-inch-Galax- Book4-img5.jpg';
+  static const String productImage83 = 'assets/images/products/Samsung-16-inch-Galax- Book4-img6.jpg';
+  
   // -- Product Reviews
   static const String userProfileImage1 = "assets/images/reviews/review_profile_image_1.jpg";
   static const String userProfileImage2 = "assets/images/reviews/review_profile_image_2.jpeg";

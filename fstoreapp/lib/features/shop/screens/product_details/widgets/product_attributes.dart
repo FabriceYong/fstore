@@ -4,160 +4,154 @@ import 'package:fstoreapp/common/widgets/custom_shapes/containers/rounded_contai
 import 'package:fstoreapp/common/widgets/text/product_price_text.dart';
 import 'package:fstoreapp/common/widgets/text/product_title_text.dart';
 import 'package:fstoreapp/common/widgets/text/section_heading.dart';
+import 'package:fstoreapp/features/shop/controllers/product/variation_controller.dart';
+import 'package:fstoreapp/features/shop/models/products_model.dart';
 import 'package:fstoreapp/utils/constants/colors.dart';
 import 'package:fstoreapp/utils/constants/sizes.dart';
 import 'package:fstoreapp/utils/helpers/helper_functions.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class FProductAttributes extends StatelessWidget {
-  const FProductAttributes({super.key});
+  const FProductAttributes({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(VariationController());
     final dark = FHelperFunctions.isDarkMode(context);
+    print(controller.selectedVariation.value.attributes);
     return Column(
       children: [
         /// -- Selected Attributes, Pricing, and Description
-        FRoundedContainer(
-          padding: const EdgeInsets.all(FSizes.md),
-          backgroundColor: dark ? FColors.darkerGrey : FColors.grey,
-          child: Column(
-            children: [
-              /// Title, Price and Stock Status
-              Row(
-                children: [
-                  const FSectionHeading(
-                    title: 'Variations',
-                    showActionButton: false,
-                  ),
-                  const Gap(FSizes.spaceBtwItems),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        //
+        Obx(
+          () => controller.selectedVariation.value.id.isNotEmpty
+              ? FRoundedContainer(
+                  padding: const EdgeInsets.all(FSizes.md),
+                  backgroundColor: dark ? FColors.darkerGrey : FColors.grey,
+                  child: Column(
                     children: [
+                      /// Title, Price and Stock Status
                       Row(
                         children: [
-                          const FProductTitleText(
-                            title: 'Price',
-                            smallSize: true,
+                          const FSectionHeading(
+                            title: 'Variations',
+                            showActionButton: false,
                           ),
                           const Gap(FSizes.spaceBtwItems),
-                          Text(
-                            '\$25',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .apply(decoration: TextDecoration.lineThrough),
-                          ),
-                          const Gap(FSizes.spaceBtwItems / 2),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  const FProductTitleText(
+                                    title: 'Price',
+                                    smallSize: true,
+                                  ),
+                                  const Gap(FSizes.spaceBtwItems),
+                                  if (controller
+                                          .selectedVariation.value.salePrice >
+                                      0)
+                                    Text(
+                                      '\$${controller.selectedVariation.value.salePrice}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
+                                          .apply(
+                                              decoration:
+                                                  TextDecoration.lineThrough),
+                                    ),
+                                  if (controller
+                                          .selectedVariation.value.salePrice >
+                                      0)
+                                    const Gap(FSizes.spaceBtwItems / 2),
 
-                          /// Sale Price
-                          const FProductPriceText(price: '20'),
+                                  /// Sale Price
+                                  FProductPriceText(
+                                      price: controller.getVariationPrice()),
+                                ],
+                              ),
+
+                              /// Status
+                              Row(
+                                children: [
+                                  const FProductTitleText(
+                                    title: 'Stock:',
+                                    smallSize: true,
+                                  ),
+                                  const Gap(FSizes.spaceBtwItems),
+                                  Text(controller.variationStockStatus.value,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium),
+                                ],
+                              )
+                            ],
+                          ),
                         ],
                       ),
 
-                      /// Status
-                      Row(
-                        children: [
-                          const FProductTitleText(
-                            title: 'Stock',
-                            smallSize: true,
-                          ),
-                          const Gap(FSizes.spaceBtwItems),
-                          Text('In Stock',
-                              style: Theme.of(context).textTheme.titleMedium),
-                        ],
-                      )
+                      /// Variation Description
+                      FProductTitleText(
+                        title: controller.selectedVariation.value.description ??
+                            '',
+                        smallSize: true,
+                        maxLines: 4,
+                      ),
                     ],
                   ),
-                ],
-              ),
-
-              /// Variation Description
-              const FProductTitleText(
-                title:
-                    'This is a Desctiption of the product and it can go up to max 4 lines',
-                smallSize: true,
-                maxLines: 4,
-              ),
-            ],
-          ),
+                )
+              : const SizedBox(),
         ),
         const Gap(FSizes.spaceBtwItems),
 
         /// -- Attributes
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const FSectionHeading(
-              title: 'Colors',
-              showActionButton: false,
-            ),
-            const Gap(FSizes.spaceBtwItems / 2),
-            Wrap(
-              children: [
-                FChoiceChip(
-                  text: 'Green',
-                  selected: true,
-                  onSelected: (value) {},
-                ),
-                FChoiceChip(
-                  text: 'Yellow',
-                  selected: false,
-                  onSelected: (value) {},
-                ),
-                FChoiceChip(
-                  text: 'Blue',
-                  selected: false,
-                  onSelected: (value) {},
-                ),
-                FChoiceChip(
-                  text: 'Red',
-                  selected: true,
-                  onSelected: (value) {},
-                ),
-              ],
-            )
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const FSectionHeading(
-              title: 'Size',
-              showActionButton: false,
-            ),
-            const Gap(FSizes.spaceBtwItems / 1),
-            Wrap(
-              spacing: FSizes.sm,
-              children: [
-                FChoiceChip(
-                  text: 'EU 34',
-                  selected: false,
-                  onSelected: (value) {},
-                ),
-                FChoiceChip(
-                  text: 'EU 36',
-                  selected: true,
-                  onSelected: (value) {},
-                ),
-                FChoiceChip(
-                  text: 'EU 38',
-                  selected: false,
-                  onSelected: (value) {},
-                ),
-                FChoiceChip(
-                  text: 'EU 40',
-                  selected: true,
-                  onSelected: (value) {},
-                ),
-                FChoiceChip(
-                  text: 'EU 40',
-                  selected: true,
-                  onSelected: (value) {},
-                ),
-              ],
-            )
-          ],
+        Obx(
+          () => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: product.productAttributes!
+                .map(
+                  (attribute) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FSectionHeading(
+                        title: attribute.name ?? '',
+                        showActionButton: false,
+                      ),
+                      const Gap(FSizes.spaceBtwItems / 2),
+                      Wrap(
+                        spacing: 8,
+                        children: attribute.values!.map((value) {
+                          final bool isSelected =
+                              controller.selectedAttributes[attribute.name] ==
+                                  value;
+
+                          final available = controller
+                              .getAttributesAvailabilityInVariation(
+                                  product.productVariations!, attribute.name!)
+                              .contains(value);
+
+                          return FChoiceChip(
+                            text: value,
+                            selected: isSelected,
+                            onSelected: available
+                                ? (selected) {
+                                    if (selected && available) {
+                                      controller.onAttributeSelected(
+                                          product, attribute.name ?? '', value);
+                                    }
+                                  }
+                                : null,
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                )
+                .toList(),
+          ),
         ),
       ],
     );

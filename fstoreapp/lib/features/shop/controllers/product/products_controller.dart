@@ -1,3 +1,4 @@
+import 'package:fstoreapp/data/repositories/products_repository/products_repository.dart';
 import 'package:fstoreapp/features/shop/models/products_model.dart';
 import 'package:fstoreapp/utils/constants/enums.dart';
 import 'package:fstoreapp/utils/popups/snackbars.dart';
@@ -8,6 +9,7 @@ class ProductController extends GetxController {
 
   RxList<ProductModel> featuredProducts = <ProductModel>[].obs;
   final isLoading = false.obs;
+  final productRepo = Get.put(ProductsRepository());
 
   @override
   void onInit() {
@@ -15,18 +17,29 @@ class ProductController extends GetxController {
     super.onInit();
   }
 
-  void fetchFeaturedProducts() async {
-    try {
-      // Show Loader while loading products
+  Future<void> fetchFeaturedProducts() async {
+    try{
       isLoading.value = true;
-
-      // Fetch Products
-
-      // Assign Product
-    } catch (e) {
+      final _productsRepository = Get.put(ProductsRepository());
+      final _products = await _productsRepository.getFeaturedProducts();
+    
+      // Assign the fetched products to the controller's list of featured products
+      this.featuredProducts.assignAll(_products); 
+    }catch(e){
       Snackbars.errorSnackBar(title: 'Ohh Snap!', message: e.toString());
-    } finally {
+    }finally{
       isLoading.value = false;
+    }
+  }
+
+  /// Get All The Featured Products.
+  Future<List<ProductModel>> fetchAllFeaturedProducts() async {
+    try{
+      final products = await productRepo.getAllFeaturedProducts();
+      return products;
+    }catch(e){
+      Snackbars.errorSnackBar(title: 'Ohh Snap!', message: e.toString());
+      return [];
     }
   }
 
@@ -36,7 +49,7 @@ class ProductController extends GetxController {
     double largestPrice = 0.0;
 
     // If no variation exists, return the simple price or sale price
-    if (product.productType == ProductType.single.name) {
+    if (product.productType == ProductType.single.toString()) {
       return (product.salePrice > 0 ? product.salePrice : product.price)
           .toString();
     } else {
@@ -52,7 +65,7 @@ class ProductController extends GetxController {
         }
 
         if (priceToConsider > largestPrice) {
-          smallestPrice = priceToConsider;
+          largestPrice = priceToConsider;
         }
       }
       // If smallest and largest prices are the same, return a single price
@@ -75,7 +88,7 @@ class ProductController extends GetxController {
   }
 
   /// -- Check Product Stock Status
-  String getProductsStocksStatus(int stock){
+  String getProductsStocksStatus(int stock) {
     return stock > 0 ? 'In Stock' : 'Out of Stock';
   }
 }

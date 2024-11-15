@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fstoreapp/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:fstoreapp/common/widgets/icons/circular_icon.dart';
+import 'package:fstoreapp/common/widgets/icons/favourite_icon.dart';
 import 'package:fstoreapp/common/widgets/images/rounded_image.dart';
 import 'package:fstoreapp/common/widgets/text/product_brand_title_text_with_verified_icon.dart';
 import 'package:fstoreapp/common/widgets/text/product_price_text.dart';
@@ -76,10 +77,7 @@ class FProductCardHorizontal extends StatelessWidget {
                 const Positioned(
                   top: 0,
                   right: 0,
-                  child: FCircularIcon(
-                    icon: Iconsax.heart5,
-                    color: Colors.red,
-                  ),
+                  child: FFavoriteIcon(productId: '',)
                 )
               ],
             ),

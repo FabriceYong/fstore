@@ -40,23 +40,22 @@ class FPromoSlider extends StatelessWidget {
                                 ))
                             .toList()),
                     const Gap(FSizes.spaceBtwItems),
-                    Obx(
-                      () => Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          for (int i = 0; i < controller.banners.length; i++)
-                            FCircularContainer(
-                              width: 18,
-                              height: 4,
-                              backgroundColor:
-                                  controller.carouselCurrentIndex.value == i
-                                      ? FColors.primary
-                                      : FColors.grey,
-                              margin: const EdgeInsets.only(right: 10),
-                            )
-                        ],
-                      ),
-                    )
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        for (int i = 0; i < controller.banners.length; i++)
+                          FCircularContainer(
+                            width: 18,
+                            height: 4,
+                            backgroundColor:
+                                controller.carouselCurrentIndex.value == i
+                                    ? FColors.primary
+                                    : FColors.grey,
+                            margin: const EdgeInsets.only(right: 10),
+                          ),
+                      ],
+                    ),
+                    const Gap(FSizes.spaceBtwItems),
                   ],
                 ),
     );

@@ -7,7 +7,7 @@ class FGridLayout extends StatelessWidget {
       required this.itemBuilder,
       required this.itemCount,
       this.crossAxisCount = 2,
-      this.mainAxisExtent = 288});
+      this.mainAxisExtent = 310});
 
   final int itemCount, crossAxisCount;
   final double? mainAxisExtent;

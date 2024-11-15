@@ -5,7 +5,7 @@ import 'package:fstoreapp/common/widgets/layouts/grid-layout.dart';
 import 'package:fstoreapp/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:fstoreapp/common/widgets/schimmers/vertical_product_shimmer.dart';
 import 'package:fstoreapp/common/widgets/text/section_heading.dart';
-import 'package:fstoreapp/features/shop/controllers/products_controller.dart';
+import 'package:fstoreapp/features/shop/controllers/product/products_controller.dart';
 import 'package:fstoreapp/features/shop/screens/all_products/all_products.dart';
 import 'package:fstoreapp/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:fstoreapp/features/shop/screens/home/widgets/home_categories.dart';
@@ -48,8 +48,17 @@ class HomeScreen extends StatelessWidget {
                         FSectionHeading(
                           title: 'Popular Categories',
                           showActionButton: true,
-                          onPressed: () =>
-                              Get.to(() => const AllProductsScreen()),
+                          onPressed: () => Get.to(
+                            () => AllProductsScreen(
+                              title: 'Popular Products',
+                              // query: FirebaseFirestore.instance
+                              //     .collection('Products')
+                              //     .where('IsFeatured', isEqualTo: true)
+                              //     .limit(6),
+                              futureMethod:
+                                  controller.fetchAllFeaturedProducts(),
+                            ),
+                          ),
                         ),
 
                         /// Categories
@@ -57,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                         const Gap(FSizes.spaceBtwSections),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -66,23 +75,32 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(FSizes.md),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   /// Banners -- Promo Sliders
                   const FPromoSlider(),
-                  const Gap(FSizes.spaceBtwItems * .5),
+                  controller.isLoading.value
+                      ? const Gap(FSizes.spaceBtwItems)
+                      : const Gap(FSizes.spaceBtwItems / 2),
 
                   /// -- Popular Products
                   Obx(() {
-                    if(controller.isLoading.value ) return FVerticalProductShimmer();
+                    if (controller.isLoading.value)
+                      return const FVerticalProductShimmer();
 
-                    if(controller.featuredProducts.isEmpty) {
-                      return Center(child: Text('No Data Found', style: Theme.of(context).textTheme.bodyMedium,),);
+                    if (controller.featuredProducts.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'No Data Found',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      );
                     }
                     return FGridLayout(
                       itemCount: controller.featuredProducts.length,
-                      mainAxisExtent: 288,
-                      itemBuilder: (context, index) =>
-                           FProductCardVertical(product: controller.featuredProducts[index],),
+                      itemBuilder: (context, index) => FProductCardVertical(
+                        product: controller.featuredProducts[index],
+                      ),
                     );
                   }),
                 ],

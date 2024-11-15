@@ -5,9 +5,13 @@ import 'package:fstoreapp/common/widgets/brands/brand_card.dart';
 import 'package:fstoreapp/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:fstoreapp/common/widgets/layouts/grid-layout.dart';
 import 'package:fstoreapp/common/widgets/products/cart/cart_menu_icon.dart';
+import 'package:fstoreapp/common/widgets/schimmers/brand_shimmer.dart';
 import 'package:fstoreapp/common/widgets/text/section_heading.dart';
+import 'package:fstoreapp/features/shop/controllers/brands_controller.dart';
 import 'package:fstoreapp/features/shop/controllers/category_controller.dart';
+import 'package:fstoreapp/features/shop/models/brand_model.dart';
 import 'package:fstoreapp/features/shop/screens/brands/all_brands.dart';
+import 'package:fstoreapp/features/shop/screens/brands/brand_products.dart';
 import 'package:fstoreapp/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:fstoreapp/utils/constants/colors.dart';
 import 'package:fstoreapp/utils/constants/sizes.dart';
@@ -22,6 +26,7 @@ class StoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categories = CategoryController.instance.featuredCategories;
+    final brandsController = Get.put(BrandsController());
     return DefaultTabController(
       length: categories.length,
       child: Scaffold(
@@ -69,16 +74,39 @@ class StoreScreen extends StatelessWidget {
                         const Gap(FSizes.spaceBtwItems / 2),
 
                         /// Brands
-                        FGridLayout(
-                          itemCount: 4,
-                          mainAxisExtent: 80,
-                          itemBuilder: (context, index) {
-                            return FBrandCard(
-                              showBorder: true,
-                              onTap: () {},
+                        Obx(() {
+                          if (brandsController.isLoading.value)
+                            return const FBrandShimmer();
+                          if (brandsController.featuredBrands.isEmpty) {
+                            return Center(
+                              child: Text(
+                                'No Data Found!',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .apply(
+                                        color:
+                                            FHelperFunctions.isDarkMode(context)
+                                                ? Colors.white
+                                                : Colors.black),
+                              ),
                             );
-                          },
-                        )
+                          }
+                          return FGridLayout(
+                            itemCount: brandsController.featuredBrands.length,
+                            mainAxisExtent: 80,
+                            itemBuilder: (context, index) {
+                              return FBrandCard(
+                                showBorder: true,
+                                brand: brandsController.featuredBrands[index],
+                                onTap: () => Get.to(() => BrandProducts(
+                                      brand: brandsController
+                                          .featuredBrands[index],
+                                    )),
+                              );
+                            },
+                          );
+                        })
                       ],
                     ),
                   ),
@@ -93,7 +121,10 @@ class StoreScreen extends StatelessWidget {
           },
           body: TabBarView(
               children: categories
-                  .map((category) => FCategoryTab(category: category))
+                  .map((category) => FCategoryTab(
+                        category: category,
+                        brand: BrandModel.empty(),
+                      ))
                   .toList()),
         ),
       ),

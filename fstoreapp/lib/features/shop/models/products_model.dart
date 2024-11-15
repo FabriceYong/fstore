@@ -6,7 +6,7 @@ import 'package:fstoreapp/features/shop/models/product_variations_model.dart';
 class ProductModel {
   String id;
   int stock;
-  String? sku;
+  String? sku; // stock keeping unit
   double price;
   String title;
   DateTime? date;
@@ -89,7 +89,8 @@ class ProductModel {
       thumbnail: data.containsKey('Thumbnail') ? data['Thumbnail'] : '',
       categoryId: data.containsKey('CategoryId') ? data['CategoryId'] : '',
       description: data.containsKey('Description') ? data['Description'] : '',
-      productType: data.containsKey('ProductType') ? data['ProductType'] : '',
+      productType: data.containsKey('ProductType') ? 
+      data['ProductType'] : '',
       brand: data.containsKey('Brand')
           ? BrandModel.fromJson(data['Brand'])
           : BrandModel.empty(),

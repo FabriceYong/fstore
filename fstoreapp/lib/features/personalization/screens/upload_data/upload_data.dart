@@ -3,6 +3,7 @@ import 'package:fstoreapp/common/widgets/list_tiles/settings_menu_tile.dart';
 import 'package:fstoreapp/common/widgets/text/section_heading.dart';
 import 'package:fstoreapp/data/dummy_data.dart';
 import 'package:fstoreapp/data/repositories/banners/banners_repository.dart';
+import 'package:fstoreapp/data/repositories/brands_repository/brands_repository.dart';
 import 'package:fstoreapp/data/repositories/categories/category_repository.dart';
 import 'package:fstoreapp/data/repositories/products_repository/products_repository.dart';
 import 'package:fstoreapp/utils/constants/colors.dart';
@@ -21,6 +22,7 @@ class UploadData extends StatelessWidget {
     final categoryRepo = Get.put(CategoryRepository());
     final bannerRepo = Get.put(BannersRepository());
     final productRepo = Get.put(ProductsRepository());
+    final brandsRepo = Get.put(BrandsRepository());
     return Scaffold(
       appBar: const FAppBar(title: Text('Upload Data'), showBackArrow: true),
       body: SingleChildScrollView(
@@ -47,13 +49,14 @@ class UploadData extends StatelessWidget {
                       color: FColors.primary,
                     ),
                   ),
-                  const FSettingsMenuTile(
+                  FSettingsMenuTile(
                     icon: Iconsax.shop,
                     title: 'Upload Brands',
-                    trailing: Icon(
-                      Icons.arrow_circle_up,
-                      color: FColors.primary,
-                    ),
+                    trailing: IconButton(
+                        icon: const Icon(Icons.arrow_circle_up),
+                        color: FColors.primary,
+                        onPressed: () =>
+                            brandsRepo.uploadDummyData(FDummyData.brands)),
                   ),
                   FSettingsMenuTile(
                     icon: Iconsax.shopping_cart,

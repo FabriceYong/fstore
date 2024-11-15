@@ -11,6 +11,7 @@ import 'package:fstoreapp/utils/exceptions/firebase_auth_exceptions.dart';
 import 'package:fstoreapp/utils/exceptions/firebase_exceptions.dart';
 import 'package:fstoreapp/utils/exceptions/format_exceptions.dart';
 import 'package:fstoreapp/utils/exceptions/platform_exceptions.dart';
+import 'package:fstoreapp/utils/local_storage/storage_utility.dart';
 import 'package:fstoreapp/utils/popups/snackbars.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -33,10 +34,14 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// Function to show Relevant screen
-  void screenRedirect() {
+  void screenRedirect() async {
     final User? user = _auth.currentUser;
     if (user != null) {
       if (user.emailVerified) {
+        // Initialize user specific bucket
+        await FLocalStorage.init(user.uid);
+
+        // Navigate to Main Menu
         Get.offAll(() => const NavigationMenu());
       } else {
         Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser!.email));

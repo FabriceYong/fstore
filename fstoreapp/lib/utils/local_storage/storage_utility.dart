@@ -1,18 +1,33 @@
 import 'package:get_storage/get_storage.dart';
 
 class FLocalStorage {
-  static final FLocalStorage _instance = FLocalStorage._internal();
-
-  factory FLocalStorage(){
-    return _instance;
-  }
+  // Single instance
+  static FLocalStorage? _instance;
 
   FLocalStorage._internal();
 
-  final _storage = GetStorage();
+  late final GetStorage _storage;
+
+  // To avoid storing null values to the local storage
+  factory FLocalStorage.instance() {
+    _instance ??= FLocalStorage._internal();
+    return _instance!;
+  }
+
+  // Initialize the local storage
+  static Future<void> init(String bucketName) async {
+    await GetStorage.init(bucketName);
+    _instance = FLocalStorage._internal();
+    _instance!._storage = GetStorage(bucketName);
+  }
+
+  // static final FLocalStorage _instance = FLocalStorage._internal();
+  // factory FLocalStorage(){
+  //   return _instance;
+  // }
 
   // Generic method to save data
-  Future<void> saveData<T>(String key, T value) async {
+  Future<void> writeData<T>(String key, T value) async {
     await _storage.write(key, value);
   }
 

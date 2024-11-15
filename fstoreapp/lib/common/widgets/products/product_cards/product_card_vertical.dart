@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fstoreapp/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:fstoreapp/common/widgets/icons/circular_icon.dart';
+import 'package:fstoreapp/common/widgets/icons/favourite_icon.dart';
 import 'package:fstoreapp/common/widgets/images/rounded_image.dart';
 import 'package:fstoreapp/common/widgets/text/product_brand_title_text_with_verified_icon.dart';
 import 'package:fstoreapp/common/widgets/text/product_price_text.dart';
 import 'package:fstoreapp/common/widgets/text/product_title_text.dart';
-import 'package:fstoreapp/features/shop/controllers/products_controller.dart';
+import 'package:fstoreapp/features/shop/controllers/product/products_controller.dart';
 import 'package:fstoreapp/features/shop/models/products_model.dart';
 import 'package:fstoreapp/features/shop/screens/product_details/product_details.dart';
 import 'package:fstoreapp/utils/constants/colors.dart';
@@ -28,6 +29,8 @@ class FProductCardVertical extends StatelessWidget {
     final screenWidth = FHelperFunctions.screenWidth();
     final cardWidth = screenWidth * .45; // Occupy 45% of the screen
     final cardHeight = cardWidth * 1.3; // Maintain aspect ratio
+    final salePercentage =
+        controller.calculateSalePercentage(product.price, product.salePrice);
 
     /// Container with side paddings, color, edges, radius and shadow
     return InkWell(
@@ -69,29 +72,27 @@ class FProductCardVertical extends StatelessWidget {
                   ),
 
                   /// -- Sale Tag
-                  Positioned(
-                    top: 12,
-                    child: FRoundedContainer(
-                      radius: FSizes.sm,
-                      backgroundColor: FColors.secondary.withOpacity(.8),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: FSizes.sm, vertical: FSizes.xs),
-                      child: Text(
-                        '${controller.calculateSalePercentage(product.price, product.salePrice)}%',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .apply(color: FColors.black),
+                  if (salePercentage != null)
+                    Positioned(
+                      top: 12,
+                      child: FRoundedContainer(
+                        radius: FSizes.sm,
+                        backgroundColor: FColors.secondary.withOpacity(.8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: FSizes.sm, vertical: FSizes.xs),
+                        child: Text(
+                          '$salePercentage%',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .apply(color: FColors.black),
+                        ),
                       ),
                     ),
-                  ),
-                  const Positioned(
+                   Positioned(
                       top: 0,
                       right: 0,
-                      child: FCircularIcon(
-                        icon: Iconsax.heart5,
-                        color: Colors.red,
-                      ))
+                      child: FFavoriteIcon(productId: product.id,))
                 ],
               ),
             ),
@@ -130,7 +131,7 @@ class FProductCardVertical extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: FSizes.sm),
                           child: Text(
-                            product.price.toString(),
+                            '\$${product.price}',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium!
@@ -139,10 +140,10 @@ class FProductCardVertical extends StatelessWidget {
                         ),
 
                       /// Price, show sale price as main price if sale exists
-                      const Padding(
-                        padding: EdgeInsets.only(left: FSizes.sm),
+                      Padding(
+                        padding: const EdgeInsets.only(left: FSizes.sm),
                         child: FProductPriceText(
-                          price: '35.6',
+                          price: controller.getProductPrice(product),
                           isLarge: false,
                         ),
                       ),

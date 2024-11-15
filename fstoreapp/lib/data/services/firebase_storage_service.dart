@@ -25,7 +25,12 @@ class FFirebaseStorageService extends GetxController {
   Future<String> uploadImageData(
       String path, Uint8List data, String name) async {
     try {
-      final ref = FirebaseStorage.instance.ref(path);
+      // Generate a unique ID (UUID) for the filename
+      // String uniqueFilename = const Uuid().v4();
+
+      // Create a reference with the unique filename
+      final ref = FirebaseStorage.instance.ref(path).child(name);
+
       await ref.putData(data);
       final url = await ref.getDownloadURL();
       return url;
