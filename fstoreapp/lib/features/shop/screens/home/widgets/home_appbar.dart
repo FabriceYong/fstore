@@ -68,7 +68,6 @@ class FHomeAppBar extends StatelessWidget {
       ),
       actions: [
         FCartCounterIcon(
-          onPressed: () => Get.to(() => const CartScreen()),
           iconColor: FColors.white,
         )
       ],

@@ -4,7 +4,7 @@ import 'package:fstoreapp/common/widgets/icons/circular_icon.dart';
 import 'package:fstoreapp/common/widgets/layouts/grid-layout.dart';
 import 'package:fstoreapp/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:fstoreapp/common/widgets/schimmers/vertical_product_shimmer.dart';
-import 'package:fstoreapp/features/shop/controllers/favourite_controller.dart';
+import 'package:fstoreapp/features/shop/controllers/product/favorite_controller.dart';
 import 'package:fstoreapp/features/shop/screens/home/home.dart';
 import 'package:fstoreapp/utils/constants/image_strings.dart';
 import 'package:fstoreapp/utils/constants/sizes.dart';

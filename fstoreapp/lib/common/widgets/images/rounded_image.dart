@@ -53,7 +53,7 @@ class FRoundedImage extends StatelessWidget {
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
                       FShimmerEffect(
                           width: width ?? double.infinity,
-                          height: height ?? 150),
+                          height: height ?? 180),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 )
               : Image.asset(

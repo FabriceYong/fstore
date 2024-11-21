@@ -3,6 +3,8 @@ import 'package:fstoreapp/common/widgets/appbar/appbar.dart';
 import 'package:fstoreapp/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:fstoreapp/common/widgets/products/cart/coupon_code.dart';
 import 'package:fstoreapp/common/widgets/success_screen/success_screen.dart';
+import 'package:fstoreapp/features/shop/controllers/product/cart_controller.dart';
+import 'package:fstoreapp/features/shop/controllers/product/order_controller.dart';
 import 'package:fstoreapp/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:fstoreapp/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:fstoreapp/features/shop/screens/checkout/widgets/billing_payment_section.dart';
@@ -12,6 +14,8 @@ import 'package:fstoreapp/utils/constants/colors.dart';
 import 'package:fstoreapp/utils/constants/image_strings.dart';
 import 'package:fstoreapp/utils/constants/sizes.dart';
 import 'package:fstoreapp/utils/helpers/helper_functions.dart';
+import 'package:fstoreapp/utils/helpers/pricing_calculator.dart';
+import 'package:fstoreapp/utils/popups/snackbars.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
@@ -21,6 +25,10 @@ class CheckoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = FHelperFunctions.isDarkMode(context);
+    final controller = CartController.instance;
+    final subTotal = controller.totalCartPrice.value;
+    final orderController = Get.put(OrderController());
+    final totalAmount = FPricingCalculator.calculateTotalPrice(subTotal, 'US');
     return Scaffold(
       appBar: FAppBar(
         showBackArrow: true,
@@ -72,17 +80,8 @@ class CheckoutScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(top: FSizes.sm),
         child: ElevatedButton(
-          onPressed: () => Get.to(
-            () => SuccessScreen(
-              image: FImages.successfulPaymentIcon,
-              title: 'Payment Success',
-              subTitle: 'Your item will be shipped soon',
-              onPressed: () => Get.offAll(
-                () => const NavigationMenu(),
-              ),
-            ),
-          ),
-          child: const Text('Checkout \$3506.56'),
+          onPressed: subTotal > 0 ? () => orderController.processOrder(totalAmount): () => Snackbars.warningSnackBar(title: 'Empty Cart', message: 'Add items in the cart in order to proceed.'),
+          child:  Text('Checkout \$$totalAmount'),
         ),
       ),
     );

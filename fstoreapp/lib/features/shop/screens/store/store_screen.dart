@@ -36,7 +36,7 @@ class StoreScreen extends StatelessWidget {
             'Store',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          actions: [FCartCounterIcon(onPressed: () {})],
+          actions: [FCartCounterIcon()],
         ),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -88,7 +88,7 @@ class StoreScreen extends StatelessWidget {
                                         color:
                                             FHelperFunctions.isDarkMode(context)
                                                 ? Colors.white
-                                                : Colors.black),
+                                                : Colors.black,),
                               ),
                             );
                           }

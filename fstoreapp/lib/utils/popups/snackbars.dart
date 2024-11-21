@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fstoreapp/utils/constants/colors.dart';
+import 'package:fstoreapp/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -21,8 +22,14 @@ class Snackbars {
               borderRadius: BorderRadius.circular(30),
               color: Theme.of(Get.context!).brightness == Brightness.dark
                   ? FColors.darkGrey.withOpacity(.9)
-                  : FColors.grey.withOpacity(.0)),
-          child: Text(message),
+                  : FColors.grey.withOpacity(.5)),
+          child: Text(
+            message,
+            style: Theme.of(Get.context!).textTheme.bodyMedium!.apply(
+                color: FHelperFunctions.isDarkMode(Get.context!)
+                    ? FColors.white
+                    : FColors.black),
+          ),
         ),
       ),
     );

@@ -73,13 +73,19 @@ class ProductsRepository extends GetxController {
     }
   }
 
-  Future<List<ProductModel>> getFavoriteProducts(List<String> productIds) async{
-    try{
+  Future<List<ProductModel>> getFavoriteProducts(
+      List<String> productIds) async {
+    try {
       // Return an empty list if the productIds list is empty
-      if(productIds.isEmpty) return [];
+      if (productIds.isEmpty) return [];
 
-      final snapshot = await _db.collection('Products').where(FieldPath.documentId, whereIn: productIds).get();
-      return snapshot.docs.map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot)).toList();
+      final snapshot = await _db
+          .collection('Products')
+          .where(FieldPath.documentId, whereIn: productIds)
+          .get();
+      return snapshot.docs
+          .map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot))
+          .toList();
     } on FirebaseException catch (e) {
       throw FFirebaseExceptions(e.code).message;
     } on PlatformException catch (e) {
@@ -137,6 +143,11 @@ class ProductsRepository extends GetxController {
           .map((document) => document['productId'] as String)
           .toList();
 
+      /// Check if productIds is Empty
+      if(productIds.isEmpty){
+        return [];
+      }
+
       // Query to get all documents where the brand is in the list of brandIds, FieldPath.documentId to query documents in collection
       final productsQuery = await _db
           .collection('Products')
@@ -154,7 +165,8 @@ class ProductsRepository extends GetxController {
     } on PlatformException catch (e) {
       throw FPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      print(e);
+      throw 'Something went wrong. Please try again: $e';
     }
   }
 

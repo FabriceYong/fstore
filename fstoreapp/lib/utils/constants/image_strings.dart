@@ -50,7 +50,7 @@ class FImages {
   // -- Lottie Animations
   static const String docerAnimation = 'assets/images/animations/141594-animation-of-docer.json';
   static const String cartAnimation = 'assets/images/animations/lady-adding-product-in-cart-animation.json';
-  static const String orderCompleteAnimation = 'assets/images/animations/order_complete_car_delivery_animation.json';
+  static const String orderCompleteAnimation = 'assets/images/animations/order-complete-car-delivery-animation.json';
   static const String packageAnimation = 'assets/images/animations/98783-packaging-in-progress.json';
   static const String paperPlaneAnimation = 'assets/images/animations/110052-paper-plane.json';
   static const String carAnimation = 'assets/images/animations/136491-animation-lottie-car-rides.json';
@@ -148,13 +148,64 @@ class FImages {
   static const String productImage75 = "assets/images/products/slipper-product-2.png";
   static const String productImage76 = "assets/images/products/slipper-product-3.png";
   static const String productImage77= "assets/images/products/slipper-product.png";
-  static const String productImage78 = 'assets/images/products/Samsung-16-inch-Galax- Book4-img1.jpg';
-  static const String productImage79 =
-      'assets/images/products/Samsung-16-inch-Galax- Book4-img2.jpg';
-  static const String productImage80 = 'assets/images/products/Samsung-16-inch-Galax- Book4-img3.jpg';
-  static const String productImage81 = 'assets/images/products/Samsung-16-inch-Galax- Book4-img4.jpg';
-  static const String productImage82 = 'assets/images/products/Samsung-16-inch-Galax- Book4-img5.jpg';
-  static const String productImage83 = 'assets/images/products/Samsung-16-inch-Galax- Book4-img6.jpg';
+  static const String productImage78 = 'assets/images/products/Samsung-16-inch-Galaxy-Book4-img1.jpg';
+  static const String productImage79 = 'assets/images/products/Samsung-16-inch-Galaxy-Book4-img2.jpg';
+  static const String productImage80 = 'assets/images/products/Samsung-16-inch-Galaxy-Book4-img3.jpg';
+  static const String productImage81 = 'assets/images/products/Samsung-16-inch-Galaxy-Book4-img4.jpg';
+  static const String productImage82 = 'assets/images/products/Samsung-16-inch-Galaxy-Book4-img5.jpg';
+  static const String productImage83 = 'assets/images/products/Samsung-16-inch-Galaxy-Book4-img6.jpg';
+  static const String productImage84 = 'assets/images/products/LG-gram-superslim-15.6-inch-aultra-thin-laptop-img1.png';
+  static const String productImage85 ='assets/images/products/LG-gram-superslim-15.6inch-Ultra-thin-laptop-img2.png';
+  static const String productImage86 =
+      'assets/images/products/LG-gram-superslim-15.6inch-Ultra-thin-laptop-img3.png';
+  static const String productImage87 =
+      'assets/images/products/LG-gram-superslim-15.6inch-Ultra-thin-laptop-img4.png';
+  static const String productImage88 =
+      'assets/images/products/LG-gram-superslim-15.6inch-Ultra-thin-laptop-img5.png';
+  static const String productImage89 =
+      'assets/images/products/LG-gram-superslim-15.6inch-Ultra-thin-laptop-img6.png';
+  static const String productImage90 = 'assets/images/products/MacBook-Pro-16.2inch-img1.png';
+  static const String productImage91 = 'assets/images/products/MacBook-Pro-16.2inch-img2.png';
+  static const String productImage92 = 'assets/images/products/MacBook-Pro-16.2inch-img3.png';
+  static const String productImage93 = 'assets/images/products/MacBook-Pro-16.2inch-img4.jpg';
+  static const String productImage94 = 'assets/images/products/MacBook-Pro-16.2inch-img5.jpg';
+  static const String productImage95 = 'assets/images/products/LG-gram-laptop-img1.png';
+  static const String productImage96 = 'assets/images/products/LG-gram-laptop-img2.jpg';
+  static const String productImage97 = 'assets/images/products/LG-gram-laptop-img3.jpg';
+  static const String productImage98 = 'assets/images/products/LG-gram-laptop-img4.jpg';
+  static const String productImage99 = 'assets/images/products/LG-gram-laptop-img5.jpg';
+  static const String productImage100 = 'assets/images/products/LG-gram-laptop-img6.jpg';
+  static const String productImage101 = 'assets/images/products/LG-gram-laptop-img7.png';
+  static const String productImage102 = 'assets/images/products/LG-gram-laptop-img8.png';
+  static const String productImage103 = 'assets/images/products/LG-gram-laptop-img9.jpg';
+  static const String productImage104 = 'assets/images/products/LG-gram-laptop-img10.png';
+  static const String productImage105 = 'assets/images/products/mens-jordans-yellow-img2.png';
+  static const String productImage106 = 'assets/images/products/mens-jordans-red-img1.png';
+  static const String productImage107 = 'assets/images/products/mens-jordans-black-img3.png';
+  static const String productImage108 = 'assets/images/products/mens-jordans-black-img6.png';
+  static const String productImage109 = 'assets/images/products/mens-jordans-blue-img7.png';
+  static const String productImage110 = 'assets/images/products/mens-jordans-red-img8.png';
+  static const String productImage111 = 'assets/images/products/mens-jordans-white-img4.png';
+  static const String productImage112 = 'assets/images/products/mens-jordans-white-img5.png';
+  static const String productImage113 = 'assets/images/products/puma-mens-caven-sneakers-white-img1.png';
+  static const String productImage114 = 'assets/images/products/puma-mens-caven-sneakers-white-img2.png';
+  static const String productImage115 = 'assets/images/products/puma-mens-caven-sneakers-grey-img3.png';
+  static const String productImage116 = 'assets/images/products/puma-mens-caven-sneakers-red-img4.png';
+  static const String productImage117 = 'assets/images/products/puma-mens-caven-sneakers-5.png';
+  static const String productImage118 = 'assets/images/products/puma-mens-caven-sneakers-yellow-img6.png';
+  static const String productImage119 = 'assets/images/products/puma-mens-caven-sneakers-black-img7.png';
+  static const String productImage120 = 'assets/images/products/puma-mens-caven-sneakers.jpg';
+  static const String productImage121 = 'assets/images/products/sony-alpha-7-camera-img1.png';
+  static const String productImage122 = 'assets/images/products/sony-alpha-7-camera-img2.png';
+  static const String productImage123 = 'assets/images/products/sony-alpha-7-camera-img3.png';
+  static const String productImage124 = 'assets/images/products/sony-alpha-7-camera-img4.png';
+  static const String productImage125 = 'assets/images/products/sony-alpha-7-camera-img5.png';
+  static const String productImage126 = 'assets/images/products/sony-alpha-7-camera-img6.png';
+  static const String productImage127 = 'assets/images/products/sony-alpha-7-camera-img7.png';
+
+
+
+  
   
   // -- Product Reviews
   static const String userProfileImage1 = "assets/images/reviews/review_profile_image_1.jpg";

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fstoreapp/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:fstoreapp/common/widgets/icons/circular_icon.dart';
 import 'package:fstoreapp/common/widgets/icons/favourite_icon.dart';
 import 'package:fstoreapp/common/widgets/images/rounded_image.dart';
+import 'package:fstoreapp/common/widgets/products/product_cards/product_add_to_cart_button.dart';
 import 'package:fstoreapp/common/widgets/text/product_brand_title_text_with_verified_icon.dart';
 import 'package:fstoreapp/common/widgets/text/product_price_text.dart';
 import 'package:fstoreapp/common/widgets/text/product_title_text.dart';
@@ -15,7 +15,6 @@ import 'package:fstoreapp/utils/constants/sizes.dart';
 import 'package:fstoreapp/utils/helpers/helper_functions.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 class FProductCardVertical extends StatelessWidget {
   const FProductCardVertical({super.key, required this.product});
@@ -89,10 +88,12 @@ class FProductCardVertical extends StatelessWidget {
                         ),
                       ),
                     ),
-                   Positioned(
+                  Positioned(
                       top: 0,
                       right: 0,
-                      child: FFavoriteIcon(productId: product.id,))
+                      child: FFavoriteIcon(
+                        productId: product.id,
+                      ))
                 ],
               ),
             ),
@@ -118,6 +119,7 @@ class FProductCardVertical extends StatelessWidget {
 
             const Spacer(),
 
+            /// Pricing Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -151,24 +153,10 @@ class FProductCardVertical extends StatelessWidget {
                   ),
                 ),
 
-                Container(
-                  decoration: const BoxDecoration(
-                    color: FColors.dark,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(FSizes.cardRadiusLg),
-                      bottomRight: Radius.circular(FSizes.productImageRadius),
-                    ),
-                  ),
-                  child: const SizedBox(
-                      width: FSizes.iconLg * 1.2,
-                      height: FSizes.iconLg * 1.2,
-                      child: Center(
-                        child: Icon(
-                          Iconsax.add,
-                          color: FColors.white,
-                        ),
-                      )),
-                )
+                // Add to cart button
+                ProductCartAddToCartButton(
+                  product: product,
+                ),
               ],
             )
           ],

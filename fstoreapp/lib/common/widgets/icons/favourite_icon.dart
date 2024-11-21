@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fstoreapp/common/widgets/icons/circular_icon.dart';
-import 'package:fstoreapp/features/shop/controllers/favourite_controller.dart';
+import 'package:fstoreapp/features/shop/controllers/product/favorite_controller.dart';
 import 'package:fstoreapp/utils/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';

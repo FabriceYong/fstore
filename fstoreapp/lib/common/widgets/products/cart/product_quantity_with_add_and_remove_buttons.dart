@@ -8,9 +8,10 @@ import 'package:iconsax/iconsax.dart';
 
 class FProductQuantityWithAddAndRemoveButtons extends StatelessWidget {
   const FProductQuantityWithAddAndRemoveButtons(
-      {super.key, required this.quantity});
+      {super.key, required this.quantity, this.add, this.remove});
 
   final int quantity;
+  final VoidCallback? add, remove;
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +28,19 @@ class FProductQuantityWithAddAndRemoveButtons extends StatelessWidget {
           color: FHelperFunctions.isDarkMode(context)
               ? FColors.white
               : FColors.black,
+              onPressed: remove,
         ),
         const Gap(FSizes.spaceBtwItems),
         Text('$quantity', style: Theme.of(context).textTheme.titleSmall),
         const Gap(FSizes.spaceBtwItems),
-        const FCircularIcon(
+         FCircularIcon(
           icon: Iconsax.add,
           width: 32,
           height: 32,
           backgroundColor: FColors.primary,
           size: FSizes.md,
           color: FColors.white,
+          onPressed: add,
         )
       ],
     );

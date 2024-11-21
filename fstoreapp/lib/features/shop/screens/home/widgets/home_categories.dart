@@ -17,6 +17,7 @@ class FHomeCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CategoryController());
+    // print(controller.featuredCategories);
     return Obx(() {
       if (controller.isLoading.value) return const FCategoryShimmer();
 
@@ -46,7 +47,7 @@ class FHomeCategories extends StatelessWidget {
                   : FColors.light,
               image: category.image,
               title: category.name,
-              onPressed: () => Get.to(() => const SubCategoriesScreen()),
+              onPressed: () => Get.to(() =>  SubCategoriesScreen(category: category)),
             );
           },
         ),

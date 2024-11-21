@@ -15,6 +15,7 @@ class FCategoryShimmer extends StatelessWidget {
       child: ListView.separated(
         shrinkWrap: true,
         itemCount: itemCount,
+        scrollDirection: Axis.horizontal,
         separatorBuilder: (_, __) => const Gap(FSizes.spaceBtwItems),
         itemBuilder: (context, index) => const Column(
           children: [

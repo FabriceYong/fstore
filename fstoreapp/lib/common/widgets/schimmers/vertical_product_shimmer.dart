@@ -23,7 +23,7 @@ class FVerticalProductShimmer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// Image
-            FShimmerEffect(width: 200, height: 200),
+            FShimmerEffect(width: 210, height: 210),
             Gap(FSizes.spaceBtwItems),
 
             /// Text

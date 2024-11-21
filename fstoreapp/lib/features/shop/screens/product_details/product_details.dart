@@ -22,7 +22,7 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const FBottomAddToCart(),
+      bottomNavigationBar:  FBottomAddToCart(product: product,),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -39,7 +39,7 @@ class ProductDetails extends StatelessWidget {
                   bottom: FSizes.defaultSpace / 2),
               child: Column(
                 children: [
-                  /// - Ratins & Share Button
+                  /// - Ratings & Share Button
                   const FRatingsAndShare(),
 
                   /// Price, Title, Stock, & Brand

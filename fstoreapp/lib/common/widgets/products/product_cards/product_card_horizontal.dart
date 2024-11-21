@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:fstoreapp/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:fstoreapp/common/widgets/icons/circular_icon.dart';
 import 'package:fstoreapp/common/widgets/icons/favourite_icon.dart';
 import 'package:fstoreapp/common/widgets/images/rounded_image.dart';
 import 'package:fstoreapp/common/widgets/text/product_brand_title_text_with_verified_icon.dart';
 import 'package:fstoreapp/common/widgets/text/product_price_text.dart';
 import 'package:fstoreapp/common/widgets/text/product_title_text.dart';
+import 'package:fstoreapp/features/shop/controllers/product/products_controller.dart';
+import 'package:fstoreapp/features/shop/models/products_model.dart';
 import 'package:fstoreapp/utils/constants/colors.dart';
-import 'package:fstoreapp/utils/constants/image_strings.dart';
+import 'package:fstoreapp/utils/constants/enums.dart';
 import 'package:fstoreapp/utils/constants/sizes.dart';
 import 'package:fstoreapp/utils/helpers/helper_functions.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 
 class FProductCardHorizontal extends StatelessWidget {
-  const FProductCardHorizontal({super.key});
+  const FProductCardHorizontal({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
+    final controller = ProductController.instance;
+    final salePercentage =
+        controller.calculateSalePercentage(product.price, product.salePrice);
     return Container(
       width: 310,
       padding: const EdgeInsets.all(1),
@@ -46,39 +52,42 @@ class FProductCardHorizontal extends StatelessWidget {
             child: Stack(
               children: [
                 /// Thumbnail Image
-                const SizedBox(
+                SizedBox(
                   width: 120,
                   height: 120,
                   child: FRoundedImage(
-                    imageUrl: FImages.productImage1,
+                    isNetworkImage: true,
+                    imageUrl: product.thumbnail,
                     applyImageRadius: true,
                   ),
                 ),
 
                 /// -- Sale Tag
-                Positioned(
-                  top: 12,
-                  child: FRoundedContainer(
-                    radius: FSizes.sm,
-                    backgroundColor: FColors.secondary.withOpacity(.8),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: FSizes.sm, vertical: FSizes.xs),
-                    child: Text(
-                      '25%',
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .apply(color: FColors.black),
+                if (salePercentage != null)
+                  Positioned(
+                    top: 12,
+                    child: FRoundedContainer(
+                      radius: FSizes.sm,
+                      backgroundColor: FColors.secondary.withOpacity(.8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: FSizes.sm, vertical: FSizes.xs),
+                      child: Text(
+                        '$salePercentage%',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge!
+                            .apply(color: FColors.black),
+                      ),
                     ),
                   ),
-                ),
 
                 /// -- Favourite Icon
-                const Positioned(
-                  top: 0,
-                  right: 0,
-                  child: FFavoriteIcon(productId: '',)
-                )
+                Positioned(
+                    top: 0,
+                    right: 0,
+                    child: FFavoriteIcon(
+                      productId: product.id,
+                    ))
               ],
             ),
           ),
@@ -91,18 +100,54 @@ class FProductCardHorizontal extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const FProductTitleText(
-                    title: 'Green Nike Shoes',
-                    smallSize: true,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FProductTitleText(
+                        title: product.title,
+                        smallSize: true,
+                      ),
+                      const Gap(FSizes.spaceBtwItems / 2),
+                      FBrandTitleTextWithVerifiedIcon(
+                          title: product.brand!.name),
+                    ],
                   ),
-                  const Gap(FSizes.spaceBtwItems / 2),
-                  const FBrandTitleTextWithVerifiedIcon(title: 'Nike'),
+
                   const Spacer(),
+
+                  // Pricing Row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       /// Pricing
-                      const Flexible(child: FProductPriceText(price: '256.0')),
+                      Flexible(
+                        child: Column(
+                          children: [
+                            if (product.productType ==
+                                    ProductType.single.toString() &&
+                                product.salePrice > 0)
+                              Padding(
+                                padding: const EdgeInsets.only(left: FSizes.sm),
+                                child: Text(
+                                  product.price.toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .apply(
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                ),
+                              ),
+
+                            /// Price, show sale price as main price is sale exists
+                            Padding(
+                              padding: const EdgeInsets.only(left: FSizes.sm),
+                              child: FProductPriceText(
+                                  price: controller.getProductPrice(product)),
+                            )
+                          ],
+                        ),
+                      ),
 
                       /// Add To Cart
                       Container(

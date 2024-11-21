@@ -64,6 +64,9 @@ class BrandsRepository extends GetxController {
           .map((document) => document['brandId'] as String)
           .toList();
 
+      /// Check if brandIds is Empty
+      if (brandIds.isEmpty) return [];
+
       // Query to get all documents where the brandId is in the list of brandIds, FieldPath.documentId to query documents in Collection
       final brandsQuery = await _db
           .collection('Brands')
