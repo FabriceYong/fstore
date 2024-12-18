@@ -14,7 +14,7 @@ enum ProductVisibility { published, hidden }
 
 enum TextSizes { small, medium, large }
 
-enum MediaCategory { folders, banners, brands, categories, products }
+enum MediaCategory { folders, banners, brands, categories, products, users }
 
 enum OrderStatus { processing, shipped, delivered, pending, cancelled }
 

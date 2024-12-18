@@ -1,4 +1,9 @@
+import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
+import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/table/data_table.dart';
 import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/widgets/dashboard_card.dart';
+import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/widgets/order_status_graph.dart';
+import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/widgets/weekly_sales.dart';
+import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +16,7 @@ class DashboardTabletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? Colors.black : Colors.white,
+          FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.light,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(FSizes.defaultSpace / 3),
@@ -62,9 +67,34 @@ class DashboardTabletScreen extends StatelessWidget {
                       title: 'Visitors',
                       subTitle: '25,953',
                     ),
-                  )
+                  ),
                 ],
-              )
+              ),
+              const Gap(FSizes.spaceBtwSections),
+
+              /// Bar Graphs
+              const FWeeklySalesGraph(),
+              const Gap(FSizes.spaceBtwSections),
+
+              /// Orders
+              /// Orders
+              FRoundedContainer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Recent Orders',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const Gap(FSizes.spaceBtwSections),
+                    const DashboardOrderTable(),
+                  ],
+                ),
+              ),
+              const Gap(FSizes.spaceBtwSections),
+
+              /// Pie Chart
+              const OrderStatusGraph()
             ],
           ),
         ),

@@ -14,6 +14,14 @@ class FImages {
   static const String google = "assets/logos/google-icon.png";
   static const String facebook = "assets/logos/facebook-icon.png";
 
+  // -- Default Image Icons
+  static const String defaultImageIcon =
+      'assets/images/content/default-image-icon.png';
+  static const String defaultMultiImageIcon =
+      'assets/images/content/default-multi-image-icon.png';
+  static const String defaultVariationImageIcon =
+      'assets/images/content/tiny-man-maintaining-work-life-ballance.png';
+
   // -- Category Icons
   static const String sportIcon =
       "assets/icons/categories/icons8-bowling-64.png";
@@ -93,6 +101,7 @@ class FImages {
       'assets/images/animations/cloud-uploading-animation.json';
   static const String loaderAnimation =
       'assets/images/animations/loader-animation.json';
+    static const String uploadFileFromComputerAnimation = 'assets/images/animations/Animation - 1734442952828.json';
 
   // -- OnBoarding Texts
   static const String onBoardingImage1 =

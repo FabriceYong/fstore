@@ -54,17 +54,17 @@ class FSidebar extends StatelessWidget {
                     const FMenuItem(
                       itemName: 'Dashboard',
                       icon: Iconsax.status,
-                      route: FRoutes.responsiveScreen,
+                      route: FRoutes.dashboard,
                     ),
                     const FMenuItem(
                       itemName: 'Media',
                       icon: Iconsax.image,
-                      route: FRoutes.firstScreen,
+                      route: FRoutes.media,
                     ),
                     const FMenuItem(
                       itemName: 'Banners',
                       icon: Iconsax.status,
-                      route: FRoutes.secondScreen,
+                      route: FRoutes.banners,
                     ),
                   ],
                 ),

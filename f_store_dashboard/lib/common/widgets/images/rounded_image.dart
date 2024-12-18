@@ -84,12 +84,13 @@ class FRoundedImage extends StatelessWidget {
     );
   }
 
-  // Network image Type
-  Widget _buildNetworkImage() {
-    if (imageUrl != null) {
+  // Function to build the Memory image Widget
+  Widget _buildMemoryImage() {
+    if (memoryImage != null) {
       return Image(
         fit: fit,
-        image: NetworkImage(imageUrl!),
+        // Display Image from memory using the Image Widget
+        image: MemoryImage(memoryImage!),
         color: overlayColor,
       );
     } else {
@@ -98,17 +99,18 @@ class FRoundedImage extends StatelessWidget {
     }
   }
 
-  // Memory image Type
-  Widget _buildMemoryImage() {
+  // Network image Type
+  Widget _buildNetworkImage() {
     if (imageUrl != null) {
       // Use CachedNetworkImage for efficient loading and caching of network images // Not working in Web but just for loading
       return CachedNetworkImage(
-          fit: fit,
-          color: overlayColor,
-          imageUrl: imageUrl!,
-          errorWidget: (context, url, error) => const Icon(Icons.error),
-          progressIndicatorBuilder: (context, url, downloadProgress) =>
-              FShimmerEffect(width: width, height: height));
+        fit: fit,
+        color: overlayColor,
+        imageUrl: imageUrl!,
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+        progressIndicatorBuilder: (context, url, downloadProgress) =>
+            FShimmerEffect(width: width, height: height),
+      );
     } else {
       // Return an empty container if no image is provided
       return Container();
@@ -117,7 +119,7 @@ class FRoundedImage extends StatelessWidget {
 
   // File image Type
   Widget _buildFileImage() {
-    if (imageUrl != null) {
+    if (file != null) {
       // Display image from assets using image widget
       return Image(
         fit: fit,

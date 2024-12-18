@@ -10,6 +10,13 @@ class FTexts {
   static const String appName = 'F-Store';
   static const String fContinue = 'Continue';
 
+  // -- Image Storage Paths
+  static const String bannerStoragePath = '/Banners';
+  static const String productImageStoragePath = '/Products';
+  static const String brandsStoragePath = '/Brands';
+  static const String categoryStoragePath = '/Categories';
+  static const String usersStoragePath = '/Users';
+
   // -- OnBoarding Texts
   static const String onBoardingTitle1 = 'Choose your product';
   static const String onBoardingTitle2 = 'Select Payment Method';

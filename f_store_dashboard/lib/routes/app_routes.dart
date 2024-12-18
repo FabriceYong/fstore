@@ -1,7 +1,8 @@
-import 'package:f_store_dashboard/features/shop/screens/dashboard/dashboard_screen.dart';
 import 'package:f_store_dashboard/features/authentication/screens/forgot_password/forgot_password_screen.dart';
 import 'package:f_store_dashboard/features/authentication/screens/login/login.dart';
 import 'package:f_store_dashboard/features/authentication/screens/reset_password/reset_password_screen.dart';
+import 'package:f_store_dashboard/features/media/screens/media.dart';
+import 'package:f_store_dashboard/features/shop/screens/dashboard/dashboard_screen.dart';
 import 'package:f_store_dashboard/routes/routes.dart';
 import 'package:f_store_dashboard/routes/routes_middleware.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,10 @@ class FAppRoutes {
     GetPage(
         name: FRoutes.dashboard,
         page: () => const DashboardScreen(),
+        middlewares: [FRoutesMiddleware()]),
+    GetPage(
+        name: FRoutes.media,
+        page: () => const MediaScreen(),
         middlewares: [FRoutesMiddleware()])
   ];
 }

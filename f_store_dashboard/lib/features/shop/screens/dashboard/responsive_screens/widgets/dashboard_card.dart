@@ -27,7 +27,7 @@ class FDashboardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return FRoundedContainer(
       backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? FColors.black : FColors.white,
+          FHelperFunctions.isDarkMode(context) ? FColors.black : Colors.white,
       onTap: onTap,
       padding: const EdgeInsets.all(FSizes.lg),
       child: Column(

@@ -31,16 +31,19 @@ class FHeader extends StatelessWidget implements PreferredSizeWidget {
         vertical: FSizes.sm,
       ),
       child: AppBar(
-        leading: !FDeviceUtils.isDesktopScreen(context)
-            ? IconButton(
+        automaticallyImplyLeading: false,
+        leading: FDeviceUtils.isDesktopScreen(context)
+            ? null
+            : IconButton(
                 onPressed: () {
                   scaffoldKey!.currentState!.openDrawer();
                 },
                 icon: Icon(
                   Iconsax.menu,
                   color: dark ? Colors.white : Colors.black,
-                ))
-            : null, // Only show the Menu icon when in Desktop mode
+                ),
+              ),
+        // Only show the Menu icon when in Desktop mode
 
         title: FDeviceUtils.isDesktopScreen(context)
             ? SizedBox(
