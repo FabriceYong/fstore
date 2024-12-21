@@ -29,6 +29,7 @@ dependencies:
   fl_chart: ^0.69.0
   flutter_dropzone: ^4.2.1
   universal_html: ^2.2.4
+  clipboard: ^0.1.3
 
   ## Product Specific
   carousel_slider: ^5.0.0

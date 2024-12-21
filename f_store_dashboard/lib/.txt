@@ -1,0 +1,29 @@
+How to view cloud network images in Flutter web – Enable CORS
+If you’re developing a Flutter web application and need to display images stored in Firebase Storage, you might encounter an issue where the images fail to load. This common problem is due to the browser’s security feature known as Cross-Origin Resource Sharing (CORS). In this post, we’ll discuss why enabling CORS is necessary and provide a step-by-step guide to configure it properly.
+
+Why Do We Need to Enable CORS for Firebase Storage?
+What is CORS?
+Cross-Origin Resource Sharing (CORS) is a security feature implemented by web browsers to prevent unauthorized access to resources on different origins (domains). This restriction helps protect users from potential security threats like cross-site request forgery (CSRF) attacks.
+
+Why Enable CORS for Firebase Storage?
+When your Flutter web application attempts to fetch images from Firebase Storage, the browser treats these requests as cross-origin because the storage URL differs from your web application’s URL. Without CORS enabled, the browser blocks these requests, preventing the images from loading. Enabling CORS for your Firebase Storage bucket allows your application to fetch and display these images seamlessly.
+
+Step-by-Step Guide to Enable CORS for Firebase Storage
+Login to Google Cloud Console
+Open your web browser and go to Google Cloud Console.
+Log in with your Google account.
+Select Your Firebase Project
+In the top-left menu, select the Firebase project associated with your storage bucket.
+Activate Google Cloud Shell
+Click on the “Activate Google Cloud Shell” icon located in the upper right corner of the console.
+A shell terminal will appear at the bottom of your window, with gcloud and gsutil already available.
+Create a CORS Configuration File
+In the Cloud Shell terminal, execute the following command to create a JSON file named cors-config.json:
+echo '[{"origin": ["*"],"responseHeader": ["Content-Type"],"method": ["GET", "HEAD"],"maxAgeSeconds": 3600}]' > cors-config.json
+Apply the CORS Configuration to Your Storage Bucket
+Replace YOUR_BUCKET_NAME with your actual bucket name. You can find your bucket name in the Firebase Console under Storage.
+Copy the bucket name in the format gs://your-bucket-name.
+Execute the following command in the Cloud Shell terminal to apply the CORS configuration: gsutil cors set cors-config.json gs://YOUR_BUCKET_NAME
+Verify the CORS Configuration
+To check if the CORS settings were applied correctly, run the following command: gsutil cors get gs://YOUR_BUCKET_NAME
+By following these steps, you will successfully enable CORS for your Firebase Storage bucket, allowing your Flutter web application to access and display images without encountering cross-origin issues.

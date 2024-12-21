@@ -1,5 +1,6 @@
 import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
 import 'package:f_store_dashboard/features/shop/controllers/dashboard_controller/dashboard_controller.dart';
+import 'package:f_store_dashboard/features/shop/controllers/products_controller/product_images_controller.dart';
 import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/table/data_table.dart';
 import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/widgets/dashboard_card.dart';
 import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/widgets/order_status_graph.dart';
@@ -18,6 +19,7 @@ class DashboardDesktopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = FHelperFunctions.isDarkMode(context);
     final controller = Get.put(DashboardController());
+    final productImagesController = Get.put(ProductImagesController());
     return Scaffold(
       backgroundColor: dark ? Colors.black : FColors.light,
       body: SingleChildScrollView(
@@ -29,6 +31,17 @@ class DashboardDesktopScreen extends StatelessWidget {
               Text('Dashboard',
                   style: Theme.of(context).textTheme.headlineMedium),
               const Gap(FSizes.spaceBtwSections),
+
+              ElevatedButton(
+                  onPressed: () =>
+                      productImagesController.selectThumbnailImage(),
+                  child: const Text('Select Image')),
+              const Gap(FSizes.spaceBtwItems),
+              ElevatedButton(
+                  onPressed: () =>
+                      productImagesController.selectMultipleImages(),
+                  child: const Text('Select Multiple Images')),
+              const Gap(FSizes.spaceBtwItems),
 
               // Cards
               const Row(

@@ -60,7 +60,10 @@ class MediaDesktopScreen extends StatelessWidget {
               const Gap(FSizes.spaceBtwSections),
 
               // Media
-              const FMediaContentWidget()
+              FMediaContentWidget(
+                allowMultipleSelection: false,
+                allowSelection: false,
+              )
             ],
           ),
         ),

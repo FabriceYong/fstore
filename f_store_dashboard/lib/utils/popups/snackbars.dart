@@ -24,18 +24,25 @@ class Snackbars {
   static customToast({required message}) {
     ScaffoldMessenger.of(Get.context!).showSnackBar(
       SnackBar(
+        width: MediaQuery.of(Get.context!).size.width * .4,
         elevation: 0,
+        behavior: SnackBarBehavior.floating,
         duration: const Duration(seconds: 3),
         backgroundColor: Colors.transparent,
         content: Container(
-          width: MediaQuery.of(Get.context!).size.width * .4,
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               color: Theme.of(Get.context!).brightness == Brightness.dark
                   ? FColors.darkGrey.withOpacity(.9)
-                  : FColors.grey.withOpacity(.0)),
+                  : FColors.grey.withOpacity(.9)),
+          child: Center(
+            child: Text(
+              message,
+              style: Theme.of(Get.context!).textTheme.bodyLarge,
+            ),
+          ),
         ),
       ),
     );
