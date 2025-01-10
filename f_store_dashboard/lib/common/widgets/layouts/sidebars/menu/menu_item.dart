@@ -18,7 +18,6 @@ class FMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SidebarController());
-    final dark = Theme.of(context).brightness == Brightness.dark;
     return InkWell(
       onTap: () => controller.menuOnTap(route),
       onHover: (hovering) => hovering

@@ -282,7 +282,7 @@ class FMediaContentWidget extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Closs Button
+        // Close Button
         SizedBox(
           width: 120,
           child: OutlinedButton.icon(

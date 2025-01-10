@@ -36,9 +36,14 @@ class FRoutes {
   static const responsiveScreen = '/responsiveScreen';
 
   static List sidebarMenuItems = [
-    login,
-    forgotPassword,
-    resetPassword,
+   dashboard,
+   media,
+   banners,
+   products,
+   categories,
+   brands,
+   customers,
+   orders,
   ];    
 }
 

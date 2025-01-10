@@ -38,7 +38,7 @@ class FElevatedButtonTheme {
         color: FColors.textWhite,
         fontWeight: FontWeight.w600,
       ),
-      shape: BeveledRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(FSizes.buttonRadius),
       ),
     ),

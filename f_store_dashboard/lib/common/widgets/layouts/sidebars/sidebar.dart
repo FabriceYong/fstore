@@ -62,9 +62,18 @@ class FSidebar extends StatelessWidget {
                       route: FRoutes.media,
                     ),
                     const FMenuItem(
-                      itemName: 'Banners',
-                      icon: Iconsax.status,
-                      route: FRoutes.banners,
+                      itemName: 'Categories',
+                      icon: Iconsax.category_2,
+                      route: FRoutes.categories,
+                    ),
+                    const FMenuItem(
+                        route: FRoutes.brands,
+                        icon: Iconsax.dcube,
+                        itemName: 'Brands'),
+                    const FMenuItem(
+                      route: 'logout',
+                      icon: Iconsax.logout,
+                      itemName: 'Logout',
                     ),
                   ],
                 ),

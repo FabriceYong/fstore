@@ -2,6 +2,12 @@ import 'package:f_store_dashboard/features/authentication/screens/forgot_passwor
 import 'package:f_store_dashboard/features/authentication/screens/login/login.dart';
 import 'package:f_store_dashboard/features/authentication/screens/reset_password/reset_password_screen.dart';
 import 'package:f_store_dashboard/features/media/screens/media.dart';
+import 'package:f_store_dashboard/features/shop/screens/brands/all_brands/brands.dart';
+import 'package:f_store_dashboard/features/shop/screens/brands/create_brand/create_brand.dart';
+import 'package:f_store_dashboard/features/shop/screens/brands/edit_brand/edit_brand.dart';
+import 'package:f_store_dashboard/features/shop/screens/categories/all_categories/categories.dart';
+import 'package:f_store_dashboard/features/shop/screens/categories/create_category/create_category.dart';
+import 'package:f_store_dashboard/features/shop/screens/categories/edit_category/edit_category.dart';
 import 'package:f_store_dashboard/features/shop/screens/dashboard/dashboard_screen.dart';
 import 'package:f_store_dashboard/routes/routes.dart';
 import 'package:f_store_dashboard/routes/routes_middleware.dart';
@@ -21,6 +27,34 @@ class FAppRoutes {
     GetPage(
         name: FRoutes.media,
         page: () => const MediaScreen(),
-        middlewares: [FRoutesMiddleware()])
+        middlewares: [FRoutesMiddleware()]),
+
+    /// Categories
+    GetPage(
+        name: FRoutes.categories,
+        page: () => const CategoriesScreen(),
+        middlewares: [FRoutesMiddleware()]),
+    GetPage(
+        name: FRoutes.createCategory,
+        page: () => const CreateCategoryScreen(),
+        middlewares: [FRoutesMiddleware()]),
+    GetPage(
+        name: FRoutes.editCategory,
+        page: () => const EditCategoryScreen(),
+        middlewares: [FRoutesMiddleware()]),
+
+    /// Brands
+    GetPage(
+        name: FRoutes.brands,
+        page: () => const BrandsScreen(),
+        middlewares: [FRoutesMiddleware()]),
+    GetPage(
+        name: FRoutes.createBrand,
+        page: () => const CreateBrandScreen(),
+        middlewares: [FRoutesMiddleware()]),
+    GetPage(
+        name: FRoutes.editBrand,
+        page: () => const EditBrandScreen(),
+        middlewares: [FRoutesMiddleware()]),
   ];
 }

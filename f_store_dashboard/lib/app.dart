@@ -33,17 +33,3 @@ class App extends StatelessWidget {
     );
   }
 }
-
-// class ResponsiveDesignScreen extends StatelessWidget {
-//   const ResponsiveDesignScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//         body: FSiteTemplate(
-//       desktop: Desktop(),
-//       tablet: Tablet(),
-//       mobile: Mobile(),
-//     ));
-//   }
-// }
