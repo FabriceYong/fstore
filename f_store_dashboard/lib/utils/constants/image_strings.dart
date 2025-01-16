@@ -16,11 +16,12 @@ class FImages {
 
   // -- Default Image Icons
   static const String defaultImageIcon =
-      'assets/images/content/default-image-icon.png';
+      'assets/images/content/default_image_icon.png';
   static const String defaultMultiImageIcon =
       'assets/images/content/default-multi-image-icon.png';
   static const String defaultVariationImageIcon =
       'assets/images/content/tiny-man-maintaining-work-life-ballance.png';
+    static const String defaultAttributeColorsImageIcon = 'assets/images/content/default_attribute_colors_image_icon.png';
 
   // -- Category Icons
   static const String sportIcon =
@@ -101,7 +102,8 @@ class FImages {
       'assets/images/animations/cloud-uploading-animation.json';
   static const String loaderAnimation =
       'assets/images/animations/loader-animation.json';
-    static const String uploadFileFromComputerAnimation = 'assets/images/animations/Animation - 1734442952828.json';
+  static const String uploadFileFromComputerAnimation =
+      'assets/images/animations/Animation - 1734442952828.json';
 
   // -- OnBoarding Texts
   static const String onBoardingImage1 =

@@ -17,7 +17,7 @@ class FOutlineButtonTheme {
           vertical: FSizes.buttonHeight, horizontal: 20),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
-          FSizes.buttonHeight,
+          FSizes.buttonRadius,
         ),
       ),
     ),

@@ -26,14 +26,14 @@ class AuthenticationRepository extends GetxController {
   }
 
   // Function to determine the relevant screen and redirect accordingly.
-  void screenRedirect() async{
+  void screenRedirect() async {
     final user = _auth.currentUser;
 
     // If the user is logged in
-    if(user != null){
+    if (user != null) {
       // Navigate to the Home
       Get.offAllNamed(FRoutes.dashboard);
-    }else{
+    } else {
       Get.offAllNamed(FRoutes.login);
     }
   }
@@ -78,7 +78,7 @@ class AuthenticationRepository extends GetxController {
 
   /// [EmailAuthentication]- FORGOT PASSWORD
   Future<void> sendForgotPasswordEmail(String email) async {
-    try{
+    try {
       return await _auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
       throw FFirebaseAuthException(e.code).message;
@@ -95,7 +95,7 @@ class AuthenticationRepository extends GetxController {
 
   // LOGOUT
   Future<void> logout() async {
-    try{
+    try {
       await _auth.signOut();
       Get.offAllNamed(FRoutes.login);
     } on FirebaseAuthException catch (e) {
@@ -107,6 +107,7 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw FPlatformException(e.code).message;
     } catch (e) {
+      print(e);
       throw 'Something went wrong. Please try again';
     }
   }

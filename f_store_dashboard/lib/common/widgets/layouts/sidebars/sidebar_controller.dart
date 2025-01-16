@@ -1,3 +1,4 @@
+import 'package:f_store_dashboard/data/repositories/authentication/authentication_repository.dart';
 import 'package:f_store_dashboard/routes/routes.dart';
 import 'package:f_store_dashboard/utils/device/device_utility.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,9 @@ class SidebarController extends GetxController {
   bool isHovering(String route) => hoverItem.value == route;
 
   void menuOnTap(String route) {
+    if (route == 'logout') {
+      AuthenticationRepository.instance.logout();
+    }
     if (!isActive(route)) {
       changeActiveItem(route);
 

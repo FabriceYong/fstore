@@ -82,7 +82,7 @@ class EditCategoryForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child:
-                  ElevatedButton(onPressed: () {}, child: const Text('Create')),
+                  ElevatedButton(onPressed: () {}, child: const Text('Update')),
             ),
 
             const Gap(FSizes.spaceBtwInputFields)
