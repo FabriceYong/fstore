@@ -11,7 +11,11 @@ import 'package:f_store_dashboard/features/shop/screens/brands/edit_brand/edit_b
 import 'package:f_store_dashboard/features/shop/screens/categories/all_categories/categories.dart';
 import 'package:f_store_dashboard/features/shop/screens/categories/create_category/create_category.dart';
 import 'package:f_store_dashboard/features/shop/screens/categories/edit_category/edit_category.dart';
+import 'package:f_store_dashboard/features/shop/screens/customers/all_customers/customers.dart';
+import 'package:f_store_dashboard/features/shop/screens/customers/customer_details/customer_details.dart';
 import 'package:f_store_dashboard/features/shop/screens/dashboard/dashboard_screen.dart';
+import 'package:f_store_dashboard/features/shop/screens/orders/all_orders/orders.dart';
+import 'package:f_store_dashboard/features/shop/screens/orders/order_details/order_details.dart';
 import 'package:f_store_dashboard/features/shop/screens/products/all_products/products.dart';
 import 'package:f_store_dashboard/features/shop/screens/products/create_product/create_product.dart';
 import 'package:f_store_dashboard/features/shop/screens/products/edit_product/edit_product.dart';
@@ -89,6 +93,26 @@ class FAppRoutes {
     GetPage(
         name: FRoutes.editProduct,
         page: () => const EditProductScreen(),
+        middlewares: [FRoutesMiddleware()]),
+
+    /// Customers
+    GetPage(
+        name: FRoutes.customers,
+        page: () => const CustomersScreen(),
+        middlewares: [FRoutesMiddleware()]),
+    GetPage(
+        name: FRoutes.customerDetails,
+        page: () => const CustomerDetailsScreen(),
+        middlewares: [FRoutesMiddleware()]),
+
+    /// Orders
+    GetPage(
+        name: FRoutes.orders,
+        page: () => const OrdersScreen(),
+        middlewares: [FRoutesMiddleware()]),
+    GetPage(
+        name: FRoutes.orderDetails,
+        page: () => const OrderDetailsScreen(),
         middlewares: [FRoutesMiddleware()]),
   ];
 }

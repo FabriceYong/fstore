@@ -21,7 +21,7 @@ class DashboardDesktopScreen extends StatelessWidget {
     final controller = Get.put(DashboardController());
     final productImagesController = Get.put(ProductImagesController());
     return Scaffold(
-      backgroundColor: dark ? Colors.black : FColors.light,
+      backgroundColor: dark ? Colors.black : FColors.primaryBackground,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(FSizes.defaultSpace),

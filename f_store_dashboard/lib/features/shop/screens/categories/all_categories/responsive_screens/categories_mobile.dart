@@ -3,6 +3,7 @@ import 'package:f_store_dashboard/common/widgets/containers/rounded_container.da
 import 'package:f_store_dashboard/common/widgets/data_table/table_header.dart';
 import 'package:f_store_dashboard/features/shop/screens/categories/all_categories/table/data_table.dart';
 import 'package:f_store_dashboard/routes/routes.dart';
+import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class CategoriesMobileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? Colors.black : Colors.white,
+          FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.primaryBackground,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(FSizes.defaultSpace),

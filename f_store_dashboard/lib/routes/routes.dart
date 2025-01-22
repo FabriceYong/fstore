@@ -27,8 +27,9 @@ class FRoutes {
   static const customerDetails = '/customerDetails';
 
   static const orders = '/orders';
-  static const createOrder = 'createOrder';
-  static const editOrder = 'editOrder';
+  static const createOrder = '/createOrder';
+  static const editOrder = '/editOrder';
+  static const orderDetails = '/orderDetails';
 
   static const firstScreen = '/firstScreen';
   static const secondScreen = '/secondScreen';

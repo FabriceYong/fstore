@@ -8,13 +8,14 @@ class FTableHeader extends StatelessWidget {
   const FTableHeader(
       {super.key,
       this.onPressed,
-      required this.buttonText,
+      this.buttonText = 'Add',
       this.controller,
-      this.searchOnChanged});
+      this.searchOnChanged,
+      this.showLeftWidget = true});
 
   final Function()? onPressed;
   final String buttonText;
-
+  final bool showLeftWidget;
   final TextEditingController? controller;
   final Function(String)? searchOnChanged;
 
@@ -22,13 +23,15 @@ class FTableHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return FDeviceUtils.isMobileScreen(context)
         ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(
-              width: 200,
-              child: ElevatedButton(
-                onPressed: onPressed,
-                child: Text(buttonText),
-              ),
-            ),
+            showLeftWidget
+                ? SizedBox(
+                    width: 200,
+                    child: ElevatedButton(
+                      onPressed: onPressed,
+                      child: Text(buttonText),
+                    ),
+                  )
+                : const SizedBox.shrink(),
             const Gap(FSizes.spaceBtwItems),
             TextFormField(
               controller: controller,
@@ -42,17 +45,19 @@ class FTableHeader extends StatelessWidget {
         : Row(children: [
             Expanded(
               flex: FDeviceUtils.isDesktopScreen(context) ? 3 : 1,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 200,
-                    child: ElevatedButton(
-                      onPressed: onPressed,
-                      child: Text(buttonText),
-                    ),
-                  ),
-                ],
-              ),
+              child: showLeftWidget
+                  ? Row(
+                      children: [
+                        SizedBox(
+                          width: 200,
+                          child: ElevatedButton(
+                            onPressed: onPressed,
+                            child: Text(buttonText),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
             ),
             Expanded(
               flex: FDeviceUtils.isDesktopScreen(context) ? 1 : 2,

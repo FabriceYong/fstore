@@ -79,6 +79,14 @@ class FSidebar extends StatelessWidget {
                         icon: Iconsax.shopping_bag,
                         itemName: 'Products'),
                     const FMenuItem(
+                        route: FRoutes.customers,
+                        icon: Iconsax.user,
+                        itemName: 'Customers'),
+                    const FMenuItem(
+                        route: FRoutes.orders,
+                        icon: Iconsax.box,
+                        itemName: 'Orders'),
+                    const FMenuItem(
                       route: 'logout',
                       icon: Iconsax.logout,
                       itemName: 'Logout',

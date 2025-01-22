@@ -1,5 +1,6 @@
 import 'package:f_store_dashboard/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
+import 'package:f_store_dashboard/features/shop/models/product_model/product_model.dart';
 import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_additional_images.dart';
 import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_attributes.dart';
 import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_bottom_navigation_buttons.dart';
@@ -20,13 +21,15 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class EditProductMobile extends StatelessWidget {
-  const EditProductMobile({super.key});
+  const EditProductMobile({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.light,
+          FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.primaryBackground,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(FSizes.defaultSpace),
@@ -114,14 +117,13 @@ class EditProductMobile extends StatelessWidget {
                   // Product Visibility
                   const ProductVisibilityWidget(),
                   const Gap(FSizes.spaceBtwSections),
-
                 ],
               ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: ProductBottomNavigationButtons(),
+      bottomNavigationBar: const ProductBottomNavigationButtons(),
     );
   }
 }

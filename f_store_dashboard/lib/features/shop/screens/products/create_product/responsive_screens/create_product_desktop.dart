@@ -27,7 +27,7 @@ class CreateProductDesktop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.light,
+          FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.primaryBackground,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(FSizes.defaultSpace),
