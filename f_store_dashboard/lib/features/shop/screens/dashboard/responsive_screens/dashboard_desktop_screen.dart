@@ -1,4 +1,5 @@
 import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
+import 'package:f_store_dashboard/common/widgets/icons/circular_icon.dart';
 import 'package:f_store_dashboard/features/shop/controllers/dashboard_controller/dashboard_controller.dart';
 import 'package:f_store_dashboard/features/shop/controllers/products_controller/product_images_controller.dart';
 import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/table/data_table.dart';
@@ -11,6 +12,7 @@ import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
 class DashboardDesktopScreen extends StatelessWidget {
   const DashboardDesktopScreen({super.key});
@@ -44,34 +46,54 @@ class DashboardDesktopScreen extends StatelessWidget {
               const Gap(FSizes.spaceBtwItems),
 
               // Cards
-              const Row(
+              Row(
                 children: [
                   Expanded(
                     child: FDashboardCard(
+                      prefixIcon: FCircularIcon(
+                        icon: Iconsax.activity,
+                        backgroundColor: FColors.primary.withOpacity(.1),
+                        color: FColors.primary,
+                      ),
                       stats: 25,
                       title: 'Sales Total',
                       subTitle: '\$364.9',
                     ),
                   ),
-                  Gap(FSizes.spaceBtwItems),
+                  const Gap(FSizes.spaceBtwItems),
                   Expanded(
                     child: FDashboardCard(
+                      prefixIcon: FCircularIcon(
+                        icon: Iconsax.box,
+                        backgroundColor: FColors.success.withOpacity(.1),
+                        color: FColors.success,
+                      ),
                       stats: 14,
                       title: 'Average Order Value',
                       subTitle: '\$26',
                     ),
                   ),
-                  Gap(FSizes.spaceBtwItems),
+                  const Gap(FSizes.spaceBtwItems),
                   Expanded(
                     child: FDashboardCard(
+                      prefixIcon: FCircularIcon(
+                        icon: Iconsax.box,
+                        backgroundColor: Colors.purple.withOpacity(.1),
+                        color: Colors.purple,
+                      ),
                       stats: 44,
                       title: 'Total Orders',
                       subTitle: '36',
                     ),
                   ),
-                  Gap(FSizes.spaceBtwItems),
+                  const Gap(FSizes.spaceBtwItems),
                   Expanded(
                     child: FDashboardCard(
+                      prefixIcon: FCircularIcon(
+                        icon: Iconsax.user,
+                        backgroundColor: FColors.error.withOpacity(.1),
+                        color: FColors.error,
+                      ),
                       stats: 2,
                       title: 'Visitors',
                       subTitle: '25,953',

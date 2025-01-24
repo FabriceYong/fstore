@@ -86,6 +86,24 @@ class FSidebar extends StatelessWidget {
                         route: FRoutes.orders,
                         icon: Iconsax.box,
                         itemName: 'Orders'),
+
+                    /// Other Menu Items
+                    Text(
+                      'OTHER',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .apply(letterSpacingDelta: 1.2),
+                    ),
+                    const FMenuItem(
+                      route: FRoutes.profile,
+                      icon: Iconsax.user,
+                      itemName: 'Profile',
+                    ),
+                    const FMenuItem(
+                        route: FRoutes.settings,
+                        icon: Iconsax.setting,
+                        itemName: 'Settings'),
                     const FMenuItem(
                       route: 'logout',
                       icon: Iconsax.logout,

@@ -31,9 +31,10 @@ class FRoutes {
   static const editOrder = '/editOrder';
   static const orderDetails = '/orderDetails';
 
-  static const firstScreen = '/firstScreen';
-  static const secondScreen = '/secondScreen';
-  static const secondScreenWithId = '/secondScreenWithId/:userId';
+  static const coupons = '/coupons';
+  static const settings = '/settings';
+  static const profile = '/profile';
+
   static const responsiveScreen = '/responsiveScreen';
 
   static List sidebarMenuItems = [
@@ -45,6 +46,9 @@ class FRoutes {
    brands,
    customers,
    orders,
+   coupons,
+   settings,
+   profile,
   ];    
 }
 

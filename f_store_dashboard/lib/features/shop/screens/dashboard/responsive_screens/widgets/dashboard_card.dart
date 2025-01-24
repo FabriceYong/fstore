@@ -15,10 +15,12 @@ class FDashboardCard extends StatelessWidget {
       required this.stats,
       this.icon = Iconsax.arrow_up_3,
       this.color = FColors.success,
+      required this.prefixIcon,
       this.onTap});
 
   final String title, subTitle;
   final IconData icon;
+  final Widget prefixIcon;
   final Color color;
   final int stats;
   final void Function()? onTap;
@@ -33,9 +35,17 @@ class FDashboardCard extends StatelessWidget {
       child: Column(
         children: [
           /// Heading
-          FSectionHeading(
-            title: title,
-            textColor: FColors.textSecondary,
+          Row(
+            children: [
+              prefixIcon,
+              const Gap(FSizes.spaceBtwItems),
+              Expanded(
+                child: FSectionHeading(
+                  title: title,
+                  textColor: FColors.textSecondary,
+                ),
+              ),
+            ],
           ),
           const Gap(FSizes.spaceBtwSections),
 
