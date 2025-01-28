@@ -1,10 +1,10 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:f_store_dashboard/common/widgets/images/rounded_image.dart';
+import 'package:f_store_dashboard/features/shop/controllers/brands_controller/brands_controller.dart';
 import 'package:f_store_dashboard/features/shop/screens/categories/all_categories/widgets/table_action_buttons.dart';
 import 'package:f_store_dashboard/routes/routes.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/enums.dart';
-import 'package:f_store_dashboard/utils/constants/image_strings.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:f_store_dashboard/utils/device/device_utility.dart';
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
@@ -14,19 +14,21 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TableSource extends DataTableSource {
+  final controller = BrandsController.instance;
   @override
   DataRow? getRow(int index) {
+    final brand = controller.filteredBrands[index];
     return DataRow2(
       cells: [
         DataCell(
           Row(
             children: [
               FRoundedImage(
-                imageType: ImageType.asset,
+                imageType: ImageType.network,
                 width: 50,
                 height: 50,
                 padding: FSizes.sm,
-                imageUrl: FImages.ikeaLogo,
+                imageUrl: brand.image,
                 borderRadius: FSizes.borderRadiusMd,
                 backgroundColor: FHelperFunctions.isDarkMode(Get.context!)
                     ? FColors.darkerGrey
@@ -34,7 +36,7 @@ class TableSource extends DataTableSource {
               ),
               const Gap(FSizes.spaceBtwItems),
               Text(
-                'IKEA',
+                brand.name,
                 style: Theme.of(Get.context!)
                     .textTheme
                     .bodyLarge!
@@ -55,47 +57,30 @@ class TableSource extends DataTableSource {
                 direction: FDeviceUtils.isMobileScreen(Get.context!)
                     ? Axis.vertical
                     : Axis.horizontal,
-                children: [
-                  Padding(
+                children: controller.allBrands.map((brand) {
+                  return Padding(
                     padding: EdgeInsets.only(
                         bottom: FDeviceUtils.isMobileScreen(Get.context!)
                             ? 0
                             : FSizes.sm),
-                    child: const Chip(
-                      label: Text('Bedroom Lamp'),
-                      padding: EdgeInsets.all(FSizes.xs),
+                    child: Chip(
+                      label: Text(brand.category!.name),
+                      padding: const EdgeInsets.all(FSizes.xs),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: FDeviceUtils.isMobileScreen(Get.context!)
-                            ? 0
-                            : FSizes.sm),
-                    child: const Chip(
-                      label: Text('Bedroom Table'),
-                      padding: EdgeInsets.all(FSizes.xs),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: FDeviceUtils.isMobileScreen(Get.context!)
-                            ? 0
-                            : FSizes.sm),
-                    child: const Chip(
-                      label: Text('Bedroom Chair'),
-                      padding: EdgeInsets.all(FSizes.xs),
-                    ),
-                  ),
-                ],
+                  );
+                }).toList(),
               ),
             ),
           ),
         ),
-        const DataCell(Icon(
-          Iconsax.heart5,
-          color: FColors.primary,
-        )),
-        DataCell(Text(DateTime.now().toString())),
+        DataCell(brand.isFeatured
+            ? const Icon(
+                Iconsax.heart5,
+                color: FColors.primary,
+              )
+            : const Icon(Iconsax.heart)),
+        DataCell(
+            Text(brand.createdAt != null ? brand.formattedCreatedAtDate : '')),
         DataCell(FTableActionButtons(
           onEditPressed: () => Get.toNamed(FRoutes.editBrand, arguments: ''),
           onDeletePressed: () {},
@@ -110,7 +95,7 @@ class TableSource extends DataTableSource {
 
   @override
   // TODO: implement rowCount
-  int get rowCount => 20;
+  int get rowCount => controller.filteredBrands.length;
 
   @override
   // TODO: implement selectedRowCount

@@ -41,7 +41,7 @@ class ImageAndMetaData extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               const Text('jamesbond@gmail.com'),
-              const Gap(FSizes.spaceBtwSections),
+              const Gap(FSizes.spaceBtwItems)
             ],
           )
         ],

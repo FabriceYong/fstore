@@ -1,5 +1,6 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:f_store_dashboard/common/widgets/data_table/paginated_data_table.dart';
+import 'package:f_store_dashboard/features/shop/controllers/brands_controller/brands_controller.dart';
 import 'package:f_store_dashboard/features/shop/screens/brands/all_brands/table/table_source.dart';
 import 'package:f_store_dashboard/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class BrandsTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = BrandsController.instance;
     return FPaginatedDataTable(
       minWidth: 700,
       tableHeight: 760,
@@ -16,7 +18,7 @@ class BrandsTable extends StatelessWidget {
       columns: [
         DataColumn2(
             label: const Text('Brand'),
-            fixedWidth: FDeviceUtils.isMobileScreen(context) ? null : 200),
+            fixedWidth: FDeviceUtils.isMobileScreen(context) ? null : 200, onSort: (columnIndex, ascending) => controller.sortBrandsByName(columnIndex, ascending),),
         const DataColumn2(label: Text('Categories')),
         DataColumn2(
             label: const Text('Feature'),

@@ -1,6 +1,7 @@
 import 'package:f_store_dashboard/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
 import 'package:f_store_dashboard/common/widgets/data_table/table_header.dart';
+import 'package:f_store_dashboard/features/shop/controllers/brands_controller/brands_controller.dart';
 import 'package:f_store_dashboard/features/shop/screens/brands/all_brands/table/table_data.dart';
 import 'package:f_store_dashboard/routes/routes.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
@@ -15,6 +16,7 @@ class BrandsDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BrandsController());
     return Scaffold(
       backgroundColor:
           FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.primaryBackground,
@@ -35,6 +37,8 @@ class BrandsDesktopScreen extends StatelessWidget {
                     // Table Header
                     FTableHeader(
                       buttonText: 'Create New Category',
+                      controller: controller.searchFilter,
+                      searchOnChanged: (query) => controller.searchBrands(query),
                       onPressed: () => Get.toNamed(FRoutes.createBrand),
                     ),
                     const Gap(FSizes.spaceBtwItems),

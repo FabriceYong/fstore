@@ -42,7 +42,7 @@ class ImageAndMetaData extends StatelessWidget {
                 'FSTORE',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
-              const Gap(FSizes.spaceBtwSections),
+              Gap(FSizes.spaceBtwItems)
             ],
           )
         ],

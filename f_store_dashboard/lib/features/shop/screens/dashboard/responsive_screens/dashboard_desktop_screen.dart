@@ -2,10 +2,10 @@ import 'package:f_store_dashboard/common/widgets/containers/rounded_container.da
 import 'package:f_store_dashboard/common/widgets/icons/circular_icon.dart';
 import 'package:f_store_dashboard/features/shop/controllers/dashboard_controller/dashboard_controller.dart';
 import 'package:f_store_dashboard/features/shop/controllers/products_controller/product_images_controller.dart';
-import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/table/data_table.dart';
-import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/widgets/dashboard_card.dart';
-import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/widgets/order_status_graph.dart';
-import 'package:f_store_dashboard/features/shop/screens/dashboard/responsive_screens/widgets/weekly_sales.dart';
+import 'package:f_store_dashboard/features/shop/screens/dashboard/table/data_table.dart';
+import 'package:f_store_dashboard/features/shop/screens/dashboard/widgets/dashboard_card.dart';
+import 'package:f_store_dashboard/features/shop/screens/dashboard/widgets/order_status_graph.dart';
+import 'package:f_store_dashboard/features/shop/screens/dashboard/widgets/weekly_sales.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
@@ -53,7 +53,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                       prefixIcon: FCircularIcon(
                         icon: Iconsax.activity,
                         backgroundColor: FColors.primary.withOpacity(.1),
-                        color: FColors.primary,
+                        color: FColors.primary.withOpacity(.9),
                       ),
                       stats: 25,
                       title: 'Sales Total',
@@ -66,7 +66,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                       prefixIcon: FCircularIcon(
                         icon: Iconsax.box,
                         backgroundColor: FColors.success.withOpacity(.1),
-                        color: FColors.success,
+                        color: FColors.success.withOpacity(.9),
                       ),
                       stats: 14,
                       title: 'Average Order Value',
@@ -79,7 +79,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                       prefixIcon: FCircularIcon(
                         icon: Iconsax.box,
                         backgroundColor: Colors.purple.withOpacity(.1),
-                        color: Colors.purple,
+                        color: Colors.purple.withOpacity(.9),
                       ),
                       stats: 44,
                       title: 'Total Orders',
@@ -92,7 +92,7 @@ class DashboardDesktopScreen extends StatelessWidget {
                       prefixIcon: FCircularIcon(
                         icon: Iconsax.user,
                         backgroundColor: FColors.error.withOpacity(.1),
-                        color: FColors.error,
+                        color: FColors.error.withOpacity(.9),
                       ),
                       stats: 2,
                       title: 'Visitors',

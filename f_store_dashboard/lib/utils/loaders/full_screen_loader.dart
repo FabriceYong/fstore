@@ -1,6 +1,7 @@
 // A Utility class for managing a full-screen loading dialog.
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
 import 'package:f_store_dashboard/utils/loaders/animation_loader.dart';
+import 'package:f_store_dashboard/utils/loaders/circular_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -14,10 +15,13 @@ class FFullScreenLoader {
   /// - animation: The lottie animation to be shown.
   static void openLoadingDialog(String text, String animation) {
     showDialog(
-      context: Get.overlayContext!, // Use Get.overlayContext for overlay dialogs
-      barrierDismissible: false, // The dialog can't be dismissed by tapping outside it
+      context:
+          Get.overlayContext!, // Use Get.overlayContext for overlay dialogs
+      barrierDismissible:
+          false, // The dialog can't be dismissed by tapping outside it
       builder: (_) => PopScope(
-        canPop: false, // Disable popping back to the previous screen with the back button
+        canPop:
+            false, // Disable popping back to the previous screen with the back button
         child: Container(
           color: FHelperFunctions.isDarkMode(Get.context!)
               ? Colors.black
@@ -35,14 +39,14 @@ class FFullScreenLoader {
     );
   }
 
-  // static void popUpCircular() {
-  //   Get.defaultDialog(
-  //     title: '',
-  //     onWillPop: () async => false,
-  //     content: FCircularLoader(),
-  //     backgroundColor: Colors.transparent,
-  //   );
-  // }
+  static void popUpCircular() {
+    Get.defaultDialog(
+      title: '',
+      onWillPop: () async => false,
+      content: const FCircularLoader(),
+      backgroundColor: Colors.transparent,
+    );
+  }
 
   /// Stop the currently open loading dialog
   static void stopLoading() {
