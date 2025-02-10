@@ -42,7 +42,7 @@ class CategoriesDesktopScreen extends StatelessWidget {
                     FTableHeader(
                       buttonText: 'Create New Category',
                       controller: controller.searchTextController,
-                      searchOnChanged: (query) => controller.searchQuery(query),
+                      searchOnChanged: (query) => controller.searchItems(query),
                       onPressed: () => Get.toNamed(FRoutes.createCategory),
                     ),
                     const Gap(FSizes.spaceBtwItems),

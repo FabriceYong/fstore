@@ -25,7 +25,7 @@ class EditCategoryController extends GetxController {
     imageUrl.value = category.image;
     isFeatured.value = category.isFeatured;
     if (category.parentId.isNotEmpty) {
-      selectedParentCategory.value = CategoryController.instance.allCategories
+      selectedParentCategory.value = CategoryController.instance.allItems
           .where((c) => c.id == category.parentId)
           .single;
     }
@@ -60,7 +60,7 @@ class EditCategoryController extends GetxController {
       await categoryRepository.updateCategory(category);
 
       // Update All Data List;
-      CategoryController.instance.updateItemsFromList(category);
+      CategoryController.instance.updateItemInList(category);
 
       // Reset Fields;
       resetFields();

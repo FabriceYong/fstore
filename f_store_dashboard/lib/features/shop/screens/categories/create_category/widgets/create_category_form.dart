@@ -62,7 +62,7 @@ class CreateCategoryForm extends StatelessWidget {
                           controller.selectedParentCategory.value.id.isNotEmpty
                               ? controller.selectedParentCategory.value
                               : null,
-                      items: categoryController.allCategories
+                      items: categoryController.allItems
                           .map(
                             (category) => DropdownMenuItem(
                               value: category,

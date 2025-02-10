@@ -1,65 +1,59 @@
+import 'package:f_store_dashboard/data/abstract/base_data_table_controller.dart';
 import 'package:f_store_dashboard/data/repositories/brands_repository/brands_repository.dart';
+import 'package:f_store_dashboard/features/shop/controllers/category_controller/category_controller.dart';
 import 'package:f_store_dashboard/features/shop/models/brand_model/brand_model.dart';
-import 'package:f_store_dashboard/utils/popups/snackbars.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BrandsController extends GetxController {
+class BrandsController extends FBaseController<BrandModel> {
   static BrandsController get instance => Get.find();
 
-  final RxBool isLoading = false.obs;
-  final RxList<BrandModel> allBrands = <BrandModel>[].obs;
-  final RxList<BrandModel> filteredBrands = <BrandModel>[].obs;
-  final BrandsRepository _brandModel = Get.put(BrandsRepository());
-
-  // Search Field
-  final TextEditingController searchFilter = TextEditingController();
-
-  // Sorting
-  final sortColumnIndex = 1.obs;
-  final sortAscending = false.obs;
+  final _brandRepository = Get.put(BrandsRepository());
+  final _categoryController = Get.put(CategoryController());
 
   @override
-  void onInit() {
-    fetchBrands();
-    super.onInit();
+  bool containsSearchQuery(BrandModel item, String query) {
+    return item.name.toLowerCase().contains(query.toLowerCase());
   }
 
-  Future<void> fetchBrands() async {
-    try {
-      isLoading.value = true;
+  @override
+  Future<void> deleteItem(BrandModel item) {
+    return _brandRepository.deleteBrand(item);
+  }
 
-      List<BrandModel> fetchedBrands = [];
-      if (fetchedBrands.isEmpty) {
-        fetchedBrands = await _brandModel.getAllBrands();
-      }
-      allBrands.assignAll(fetchedBrands);
-      filteredBrands.assignAll(fetchedBrands);
+  @override
+  Future<List<BrandModel>> fetchItems() async {
+    // Fetch Brands
+    final fetchedBrands = await _brandRepository.getAllBrands();
 
-      isLoading.value = false;
-    } catch (e) {
-      isLoading.value = false;
-      print('Error: $e');
-      Snackbars.errorSnackBar(title: 'Ohh Snap!', message: e.toString());
+    // Fetch brand categories relational data
+    final brandCategories = await _brandRepository.getAllBrandCategories();
+
+    // Fetch all categories if data does not already exist
+    if (_categoryController.allItems.isNotEmpty)
+      await _categoryController.fetchItems();
+
+    // Loop all brands and fetch categories of each
+    for (var brand in fetchedBrands) {
+      List<String> categoryIds = brandCategories
+          .where((brandCategory) => brandCategory.brandId == brand.id)
+          .map((brandCategory) => brandCategory.categoryId)
+          .toList();
+
+      brand.brandCategories = _categoryController.allItems
+          .where((category) => categoryIds.contains(category.id))
+          .toList();
     }
+
+    return fetchedBrands;
   }
 
-  searchBrands(String query) {
-    filteredBrands.assignAll(allBrands.where(
-        (brand) => brand.name.toLowerCase().contains(query.toLowerCase())));
+  void sortByName(int sortColumnIndex, bool ascending) {
+    sortByProperty(
+        sortColumnIndex, ascending, (BrandModel b) => b.name.toLowerCase());
   }
 
-  sortBrandsByName(int columnIndex, bool ascending) {
-    sortColumnIndex.value = columnIndex;
-    sortAscending.value = ascending;
-
-    if (ascending) {
-      return filteredBrands.sort(
-        (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
-      );
-    } else {
-      return filteredBrands
-          .sort((a, b) => b.name.toLowerCase().compareTo(b.name.toLowerCase()));
-    }
+  Future<void> refreshBrands() async {
+    await fetchItems();
+    update();
   }
 }

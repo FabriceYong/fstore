@@ -16,8 +16,8 @@ class CategoryRows extends DataTableSource {
   final controller = CategoryController.instance;
   @override
   DataRow? getRow(int index) {
-    final category = controller.filteredCategories[index];
-    final parentCategory = controller.allCategories
+    final category = controller.filteredItems[index];
+    final parentCategory = controller.allItems
         .firstWhereOrNull((item) => item.id == category.parentId);
     return DataRow2(
         selected: controller.selectedRows[index],
@@ -66,7 +66,7 @@ class CategoryRows extends DataTableSource {
             FTableActionButtons(
                 onEditPressed: () =>
                     Get.toNamed(FRoutes.editCategory, arguments: category),
-                onDeletePressed: () => controller.confirmAndDeleteCategory(category)),
+                onDeletePressed: () => controller.conformDeleteItem(category)),
           )
         ]);
   }
@@ -75,8 +75,9 @@ class CategoryRows extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => controller.filteredCategories.length;
+  int get rowCount => controller.filteredItems.length;
 
   @override
-  int get selectedRowCount => 0;
+  int get selectedRowCount =>
+      controller.selectedRows.where((selected) => selected).length;
 }

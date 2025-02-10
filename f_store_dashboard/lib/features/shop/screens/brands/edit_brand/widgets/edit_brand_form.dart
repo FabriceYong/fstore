@@ -1,14 +1,18 @@
 import 'package:f_store_dashboard/common/widgets/chips/choice_chip.dart';
 import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
 import 'package:f_store_dashboard/common/widgets/images/image_uploader.dart';
+import 'package:f_store_dashboard/features/shop/controllers/brands_controller/update_brand_controller.dart';
+import 'package:f_store_dashboard/features/shop/controllers/category_controller/category_controller.dart';
 import 'package:f_store_dashboard/features/shop/models/brand_model/brand_model.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/enums.dart';
 import 'package:f_store_dashboard/utils/constants/image_strings.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
+import 'package:f_store_dashboard/utils/validators/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class EditBrandForm extends StatelessWidget {
@@ -18,80 +22,92 @@ class EditBrandForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(UpdateBrandController());
+    final categoryController = Get.put(CategoryController());
+    controller.init(brand);
     return FRoundedContainer(
       width: 500,
       backgroundColor:
           FHelperFunctions.isDarkMode(context) ? FColors.dark : Colors.white,
       padding: const EdgeInsets.all(FSizes.defaultSpace),
       child: Form(
+          key: controller.formKey,
           child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Heading
-          const Gap(FSizes.sm),
-          Text(
-            'Update Brand',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          const Gap(FSizes.spaceBtwSections),
-
-          // Form field
-          TextFormField(
-            decoration: const InputDecoration(
-                labelText: 'Brand Name', prefixIcon: Icon(Iconsax.box)),
-          ),
-          const Gap(FSizes.spaceBtwInputFields),
-
-          Text(
-            'Select Categories',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const Gap(FSizes.spaceBtwInputFields / 2),
-
-          Wrap(
-            spacing: FSizes.sm,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: FSizes.sm),
-                child: FChoiceChip(
-                    text: 'Tables', selected: true, onSelected: (value) {}),
+              // Heading
+              const Gap(FSizes.sm),
+              Text(
+                'Update Brand',
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: FSizes.sm),
-                child: FChoiceChip(
-                    text: 'Chairs', selected: false, onSelected: (value) {}),
+              const Gap(FSizes.spaceBtwSections),
+
+              // Form field
+              TextFormField(
+                controller: controller.name,
+                validator: (value) =>
+                    FValidator.validateEmptyText('Brand Name', value),
+                decoration: const InputDecoration(
+                    labelText: 'Brand Name', prefixIcon: Icon(Iconsax.box)),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: FSizes.sm),
-                child: FChoiceChip(
-                    text: 'Lamps', selected: false, onSelected: (value) {}),
-              )
+              const Gap(FSizes.spaceBtwInputFields),
+
+              Text(
+                'Select Categories',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const Gap(FSizes.spaceBtwInputFields / 2),
+
+              Obx(
+                () => Wrap(
+                    spacing: FSizes.sm,
+                    children: categoryController.allItems
+                        .map((category) => Padding(
+                              padding: const EdgeInsets.only(bottom: FSizes.sm),
+                              child: FChoiceChip(
+                                  text: category.name,
+                                  selected: controller.selectedCategories
+                                      .contains(category),
+                                  onSelected: (value) =>
+                                      controller.toggleSelection(category)),
+                            ))
+                        .toList()),
+              ),
+              const Gap(FSizes.spaceBtwInputFields * 2),
+              Obx(
+                () => FImageUploader(
+                  imageType: controller.imageUrl.value.isNotEmpty
+                      ? ImageType.network
+                      : ImageType.asset,
+                  width: 80,
+                  height: 80,
+                  imageUrl: controller.imageUrl.value.isNotEmpty
+                      ? controller.imageUrl.value
+                      : FImages.defaultImageIcon,
+                  onIconButtonPressed: () => controller.pickImage(),
+                ),
+              ),
+              const Gap(FSizes.spaceBtwInputFields),
+
+              Obx(
+                () => CheckboxMenuButton(
+                    value: controller.isFeatured.value,
+                    onChanged: (value) =>
+                        controller.isFeatured.value = value ?? false,
+                    child: const Text('Featured')),
+              ),
+              const Gap(FSizes.spaceBtwInputFields * 2),
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () => controller.updateBrand(brand),
+                    child: const Text('Update')),
+              ),
+              const Gap(FSizes.spaceBtwInputFields * 2)
             ],
-          ),
-          const Gap(FSizes.spaceBtwInputFields * 2),
-          FImageUploader(
-            imageType: ImageType.asset,
-            width: 80,
-            height: 80,
-            imageUrl: FImages.defaultImageIcon,
-            onIconButtonPressed: () {},
-          ),
-          const Gap(FSizes.spaceBtwInputFields),
-
-          CheckboxMenuButton(
-              value: true,
-              onChanged: (value) {},
-              child: const Text('Featured')),
-          const Gap(FSizes.spaceBtwInputFields * 2),
-
-          SizedBox(
-            width: double.infinity,
-            child:
-                ElevatedButton(onPressed: () {}, child: const Text('Update')),
-          ),
-          const Gap(FSizes.spaceBtwInputFields * 2)
-        ],
-      )),
+          )),
     );
   }
 }

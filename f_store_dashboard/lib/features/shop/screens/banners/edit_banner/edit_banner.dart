@@ -4,13 +4,14 @@ import 'package:f_store_dashboard/features/shop/screens/banners/edit_banner/resp
 import 'package:f_store_dashboard/features/shop/screens/banners/edit_banner/responsive_screens/edit_banner_mobile.dart';
 import 'package:f_store_dashboard/features/shop/screens/banners/edit_banner/responsive_screens/edit_banner_tablet.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EditBannerScreen extends StatelessWidget {
   const EditBannerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final banner = BannerModel(imageUrl: '', targetUrl: '', active: '');
+    final banner = Get.arguments;
     return  FSiteTemplate(
       desktop: EditBannerDesktop(banner: banner),
       tablet: EditBannerTablet(banner: banner),

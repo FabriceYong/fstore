@@ -17,8 +17,11 @@ class TableSource extends DataTableSource {
   final controller = BrandsController.instance;
   @override
   DataRow? getRow(int index) {
-    final brand = controller.filteredBrands[index];
+    final brand = controller.filteredItems[index];
     return DataRow2(
+      selected: controller.selectedRows[index],
+      onSelectChanged: (value) =>
+          controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           Row(
@@ -57,18 +60,23 @@ class TableSource extends DataTableSource {
                 direction: FDeviceUtils.isMobileScreen(Get.context!)
                     ? Axis.vertical
                     : Axis.horizontal,
-                children: controller.allBrands.map((brand) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        bottom: FDeviceUtils.isMobileScreen(Get.context!)
-                            ? 0
-                            : FSizes.sm),
-                    child: Chip(
-                      label: Text(brand.category!.name),
-                      padding: const EdgeInsets.all(FSizes.xs),
-                    ),
-                  );
-                }).toList(),
+                children: brand.brandCategories != null
+                    ? brand.brandCategories!
+                        .map(
+                          (e) => Padding(
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    FDeviceUtils.isMobileScreen(Get.context!)
+                                        ? 0
+                                        : FSizes.xs),
+                            child: Chip(
+                              label: Text(e.name),
+                              padding: const EdgeInsets.all(FSizes.xs),
+                            ),
+                          ),
+                        )
+                        .toList()
+                    : [const SizedBox()],
               ),
             ),
           ),
@@ -82,8 +90,8 @@ class TableSource extends DataTableSource {
         DataCell(
             Text(brand.createdAt != null ? brand.formattedCreatedAtDate : '')),
         DataCell(FTableActionButtons(
-          onEditPressed: () => Get.toNamed(FRoutes.editBrand, arguments: ''),
-          onDeletePressed: () {},
+          onEditPressed: () => Get.toNamed(FRoutes.editBrand, arguments: brand),
+          onDeletePressed: () => controller.conformDeleteItem(brand),
         ))
       ],
     );
@@ -95,9 +103,10 @@ class TableSource extends DataTableSource {
 
   @override
   // TODO: implement rowCount
-  int get rowCount => controller.filteredBrands.length;
+  int get rowCount => controller.filteredItems.length;
 
   @override
   // TODO: implement selectedRowCount
-  int get selectedRowCount => 0;
+  int get selectedRowCount =>
+      controller.selectedRows.where((selected) => selected).length;
 }

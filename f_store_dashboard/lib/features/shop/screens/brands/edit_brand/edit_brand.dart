@@ -4,13 +4,14 @@ import 'package:f_store_dashboard/features/shop/screens/brands/edit_brand/respos
 import 'package:f_store_dashboard/features/shop/screens/brands/edit_brand/resposive_screens/edit_brand_mobile.dart';
 import 'package:f_store_dashboard/features/shop/screens/brands/edit_brand/resposive_screens/edit_brand_tablet.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EditBrandScreen extends StatelessWidget {
   const EditBrandScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final brand = BrandModel(id: '', name: '', image: '');
+    final brand = Get.arguments;
     return  FSiteTemplate(
       desktop: EditBrandDesktop(brand: brand),
       tablet: EditBrandTablet(brand: brand),

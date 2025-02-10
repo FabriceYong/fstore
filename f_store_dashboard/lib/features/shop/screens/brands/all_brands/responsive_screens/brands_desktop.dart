@@ -7,6 +7,7 @@ import 'package:f_store_dashboard/routes/routes.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
+import 'package:f_store_dashboard/utils/loaders/normal_animated_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -18,8 +19,9 @@ class BrandsDesktopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(BrandsController());
     return Scaffold(
-      backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.primaryBackground,
+      backgroundColor: FHelperFunctions.isDarkMode(context)
+          ? Colors.black
+          : FColors.primaryBackground,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(FSizes.defaultSpace),
@@ -37,14 +39,18 @@ class BrandsDesktopScreen extends StatelessWidget {
                     // Table Header
                     FTableHeader(
                       buttonText: 'Create New Category',
-                      controller: controller.searchFilter,
-                      searchOnChanged: (query) => controller.searchBrands(query),
+                      controller: controller.searchController,
+                      searchOnChanged: (query) => controller.searchItems(query),
                       onPressed: () => Get.toNamed(FRoutes.createBrand),
                     ),
                     const Gap(FSizes.spaceBtwItems),
 
                     // Brands Table
-                    const BrandsTable(),
+                    Obx(() {
+                      if (controller.isLoading.value)
+                        return const FLoaderAnimation();
+                      return const BrandsTable();
+                    })
                   ],
                 ),
               )

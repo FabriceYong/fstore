@@ -3,24 +3,27 @@ import 'package:f_store_dashboard/features/shop/models/category_model/category_m
 import 'package:f_store_dashboard/utils/formatters/formatters.dart';
 
 class BrandModel {
-  final String id;
-  final String name;
-  final String image;
-  final bool isFeatured;
-  final int? productsCount;
-  CategoryModel? category;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+   String id;
+   String name;
+   String image;
+   bool isFeatured;
+   int? productsCount;
+   DateTime? createdAt;
+   DateTime? updatedAt;
+
+      // Not Mapped
+      List<CategoryModel>? brandCategories;
 
   BrandModel(
       {required this.id,
       required this.name,
       required this.image,
       this.isFeatured = false,
-      this.category,
+      this.brandCategories,
       this.productsCount,
       this.createdAt,
       this.updatedAt});
+
 
   static BrandModel empty() => BrandModel(id: '', name: '', image: '');
   String get formattedCreatedAtDate => FFormatter.formatDate(createdAt);
@@ -32,10 +35,9 @@ class BrandModel {
       'Name': name,
       'Image': image,
       'IsFeatured': isFeatured,
-      'Category': category?.toJson(),
       'ProductsCount': productsCount,
       'CreatedAt': createdAt,
-      'UpdatedAt': updatedAt,
+      'UpdatedAt': DateTime.now(),
     };
   }
 
@@ -48,14 +50,14 @@ class BrandModel {
         name: data.containsKey('Name') ? data['Name'] : '',
         image: data.containsKey('Image') ? data['Image'] : '',
         isFeatured: data.containsKey('IsFeatured') ? data['IsFeatured'] : false,
-        category: data.containsKey('Category') ? CategoryModel.fromSnapshot(data['Categories']) : null,
+        // category: data.containsKey('Category') ? CategoryModel.fromSnapshot(data['Categories']) : null,
         productsCount:
             data.containsKey('ProductsCount') ? data['ProductsCount'] : 0,
         createdAt: data.containsKey('CreatedAt')
-            ? DateTime.parse(data['CreatedAt'] as String)
+            ? (data['CreatedAt'] as Timestamp?)?.toDate()
             : null,
         updatedAt: data.containsKey('UpdatedAt')
-            ? DateTime.parse(data['UpdatedAt'] as String)
+            ? (data['UpdatedAt']as Timestamp?)?.toDate()
             : null,
       );
     } else {

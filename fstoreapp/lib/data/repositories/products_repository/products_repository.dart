@@ -191,7 +191,7 @@ class ProductsRepository extends GetxController {
 
         // Product list of images
         if (product.images != null && product.images!.isNotEmpty) {
-          List<String> imagesUrl = [];
+          List<String> imageUrls = [];
           for (var image in product.images!) {
             // Get Image data link from local assets
             final assetImage = await storage.getImageDataFromAssets(image);
@@ -201,10 +201,10 @@ class ProductsRepository extends GetxController {
                 'Products/Images', assetImage, image);
 
             // Assign URL to product.thumbnail attribute
-            imagesUrl.add(url);
+            imageUrls.add(url);
           }
           product.images!.clear();
-          product.images!.addAll(imagesUrl);
+          product.images!.addAll(imageUrls);
         }
 
         // Upload Variation Images

@@ -12,7 +12,7 @@ class CategoriesTable extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(CategoryController());
     return Obx(() {
-      Text(controller.filteredCategories.length
+      Text(controller.filteredItems.length
           .toString()); // To change the state of the search field so search results can be shown
       Text(controller.selectedRows.length
           .toString()); // To change the state of the selected rows so the selected rows can be shown

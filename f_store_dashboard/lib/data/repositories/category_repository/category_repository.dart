@@ -40,7 +40,7 @@ class CategoryRepository extends GetxController {
     } on PlatformException catch (e) {
       throw FPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong while deleting the category. Please try again';
+      throw 'Something went wrong while creating the category. Please try again';
     }
   }
 
@@ -58,7 +58,7 @@ class CategoryRepository extends GetxController {
     } on PlatformException catch (e) {
       throw FPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong while deleting the category. Please try again';
+      throw 'Something went wrong while updating the category. Please try again';
     }
   }
 
