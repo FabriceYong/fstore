@@ -23,6 +23,17 @@ class BannerController extends FBaseController<BannerModel> {
     return await _bannerRepository.getAllBanners();
   }
 
+  /// Method for formatting a Route String
+  String formatRoute(String route) {
+    if(route.isEmpty) return '';
+    // remove the leading '/'
+    String formatted = route.substring(1);
+
+    // Capitalize the first character
+    formatted = formatted[0].toUpperCase() + formatted.substring(1);
+    return formatted;
+  }
+
   void sortByName(int sortColumnIndex, bool ascending) {
     sortByProperty(sortColumnIndex, ascending,
         (BannerModel banner) => banner.targetScreen.toLowerCase());

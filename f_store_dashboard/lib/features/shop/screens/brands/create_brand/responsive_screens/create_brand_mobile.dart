@@ -5,7 +5,6 @@ import 'package:f_store_dashboard/routes/routes.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
-import 'package:f_store_dashboard/utils/loaders/normal_animated_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -20,24 +19,21 @@ class CreateBrandMobile extends StatelessWidget {
       backgroundColor: FHelperFunctions.isDarkMode(context)
           ? Colors.black
           : FColors.primaryBackground,
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(FSizes.defaultSpace),
+          padding: EdgeInsets.all(FSizes.defaultSpace),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Breadcrumbs
-              const BreadcrumbWithHeading(
+              BreadcrumbWithHeading(
                   returnToPrevScreen: true,
                   heading: 'Create Brand',
                   breadcrumbItems: [FRoutes.createBrand, 'Create Brand']),
-              const Gap(FSizes.spaceBtwSections),
+              Gap(FSizes.spaceBtwSections),
 
               /// Create Brand Form
-              Obx(() {
-                if (controller.isLoading.value) return const FLoaderAnimation();
-                return const CreateBrandForm();
-              })
+              CreateBrandForm(),
             ],
           ),
         ),

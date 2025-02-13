@@ -11,6 +11,7 @@ class BannerRepository extends GetxController {
 
   final _db = FirebaseFirestore.instance;
 
+  // Fetch Banners
   Future<List<BannerModel>> getAllBanners() async {
     try {
       final banners = await _db.collection('Banners').get();
@@ -28,6 +29,38 @@ class BannerRepository extends GetxController {
     }
   }
 
+ // Create Banner
+  Future<String> createBanner(BannerModel banner) async {
+    try{
+      final docRef = await _db.collection('Banners').add(banner.toJson());
+      return docRef.id;
+    }on FirebaseException catch (e) {
+      throw FFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const FFormatException();
+    } on PlatformException catch (e) {
+      throw FPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong while creating the banner. Please try again';
+    }
+  }
+
+  // Update Banner
+  Future<void> updateBanner(BannerModel banner) async {
+    try{
+      await _db.collection('Banners').doc(banner.id).update(banner.toJson());
+    }on FirebaseException catch (e) {
+      throw FFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const FFormatException();
+    } on PlatformException catch (e) {
+      throw FPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong while updating the banner. Please try again';
+    }
+  }
+
+  // Delete Banner
   Future<void> deleteBanner(String bannerId) async {
     try {
       return await _db.collection('Banners').doc(bannerId).delete();

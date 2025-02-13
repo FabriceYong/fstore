@@ -59,9 +59,11 @@ class CategoryRows extends DataTableSource {
                   color: FColors.primary,
                 )
               : const Icon(Iconsax.heart)),
-          DataCell(Text(category.createdAt != null
-              ? category.formattedCreatedAtDate
-              : '')),
+          category.createdAt != null
+              ? DataCell(Text('Create At: ${category.formattedCreatedAtDate}'))
+              : category.updatedAt != null
+                  ? DataCell(Text('Updated At: ${category.formattedUpdatedAt}'))
+                  : const DataCell(Text('')),
           DataCell(
             FTableActionButtons(
                 onEditPressed: () =>

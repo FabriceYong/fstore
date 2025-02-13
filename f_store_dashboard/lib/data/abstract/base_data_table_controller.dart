@@ -97,8 +97,8 @@ abstract class FBaseController<T> extends GetxController {
   conformDeleteItem(T item) {
     FDialogs.defaultDialog(
         context: Get.context!,
-        title: 'Delete Category!',
-        content: 'Are you sure you want to delete this category?',
+        title: 'Delete Item!',
+        content: 'Are you sure you want to delete this item?',
         positive: 'Delete',
         negative: 'Cancel',
         onPositive: () => delete(item));
@@ -131,7 +131,7 @@ abstract class FBaseController<T> extends GetxController {
       // Stop the Loader
       FFullScreenLoader.stopLoading();
       Snackbars.successSnackbar(
-          title: 'Deleted!', message: 'Category deleted successfully');
+          title: 'Deleted!', message: 'Item deleted successfully');
     } catch (e) {
       FFullScreenLoader.stopLoading();
       Snackbars.errorSnackBar(title: 'Oops!', message: e.toString());

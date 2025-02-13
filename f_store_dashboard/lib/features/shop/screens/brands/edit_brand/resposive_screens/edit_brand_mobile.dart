@@ -37,10 +37,7 @@ class EditBrandMobile extends StatelessWidget {
               const Gap(FSizes.spaceBtwSections),
 
               /// Create Brand Form
-              Obx(() {
-                if (controller.isLoading.value) return const FLoaderAnimation();
-                return EditBrandForm(brand: brand);
-              })
+              EditBrandForm(brand: brand)
             ],
           ),
         ),

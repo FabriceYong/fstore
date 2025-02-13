@@ -12,6 +12,10 @@ class BannersTable extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = BannerController.instance;
     return Obx((){
+      Text(controller.filteredItems.length.toString());
+      Text(controller.selectedRows.length.toString());
+      
+      // Table
       return FPaginatedDataTable(
         minWidth: 700,
         tableHeight: 900,
@@ -26,6 +30,7 @@ class BannersTable extends StatelessWidget {
                 controller.sortByName(columnIndex, ascending),
           ),
           const DataColumn2(label: Text('Active')),
+          DataColumn2(label: Text('Date')),
           const DataColumn2(label: Text('Actions'), fixedWidth: 100),
         ],
         source: BannersRows(),

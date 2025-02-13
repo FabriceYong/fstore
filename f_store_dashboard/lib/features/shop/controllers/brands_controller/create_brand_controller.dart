@@ -98,7 +98,7 @@ class CreateBrandController extends GetxController {
         for (var category in selectedCategories) {
           final brandCategory = BrandCategoryModel(
               id: '', brandId: newBrand.id, categoryId: category.id);
-          await repository.createBrandCategory(brandCategory);
+          brandCategory.id = await repository.createBrandCategory(brandCategory);
         }
 
         newBrand.brandCategories ??= [];

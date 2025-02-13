@@ -87,8 +87,11 @@ class TableSource extends DataTableSource {
                 color: FColors.primary,
               )
             : const Icon(Iconsax.heart)),
-        DataCell(
-            Text(brand.createdAt != null ? brand.formattedCreatedAtDate : '')),
+        brand.createdAt != null
+            ? DataCell(Text('Created At: ${brand.formattedCreatedAtDate}'))
+            : brand.updatedAt != null
+                ? DataCell(Text('Updated At: ${brand.formattedUpdatedAtDate}'))
+                : const DataCell(Text('')),
         DataCell(FTableActionButtons(
           onEditPressed: () => Get.toNamed(FRoutes.editBrand, arguments: brand),
           onDeletePressed: () => controller.conformDeleteItem(brand),
@@ -98,15 +101,12 @@ class TableSource extends DataTableSource {
   }
 
   @override
-  // TODO: implement isRowCountApproximate
   bool get isRowCountApproximate => false;
 
   @override
-  // TODO: implement rowCount
   int get rowCount => controller.filteredItems.length;
 
   @override
-  // TODO: implement selectedRowCount
   int get selectedRowCount =>
       controller.selectedRows.where((selected) => selected).length;
 }

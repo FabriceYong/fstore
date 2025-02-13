@@ -6,7 +6,6 @@ import 'package:f_store_dashboard/routes/routes.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
-import 'package:f_store_dashboard/utils/loaders/normal_animated_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -37,10 +36,7 @@ class EditBrandTablet extends StatelessWidget {
               const Gap(FSizes.spaceBtwSections),
 
               /// Create Brand Form
-              Obx(() {
-                if (controller.isLoading.value) return const FLoaderAnimation();
-                return EditBrandForm(brand: brand);
-              })
+              EditBrandForm(brand: brand)
             ],
           ),
         ),

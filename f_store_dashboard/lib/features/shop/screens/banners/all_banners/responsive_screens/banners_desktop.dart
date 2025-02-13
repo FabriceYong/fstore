@@ -45,11 +45,9 @@ class BannersDesktopScreen extends StatelessWidget {
 
                     // Table
                     Obx(() {
-                      if (controller.isLoading.value) {
+                      if (controller.isLoading.value)
                         return const FLoaderAnimation();
-                      } else {
-                        return const BannersTable();
-                      }
+                      return const BannersTable();
                     }),
                   ],
                 ),
