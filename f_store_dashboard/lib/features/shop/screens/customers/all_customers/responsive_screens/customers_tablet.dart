@@ -1,31 +1,36 @@
 import 'package:f_store_dashboard/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
 import 'package:f_store_dashboard/common/widgets/data_table/table_header.dart';
+import 'package:f_store_dashboard/features/shop/controllers/customer_controller/customer_controller.dart';
 import 'package:f_store_dashboard/features/shop/screens/customers/all_customers/table/data_table.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
+import 'package:f_store_dashboard/utils/loaders/normal_animated_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class CustomersTabletScreen extends StatelessWidget {
   const CustomersTabletScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CustomerController());
     return Scaffold(
-      backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.primaryBackground,
-      body: const SingleChildScrollView(
+      backgroundColor: FHelperFunctions.isDarkMode(context)
+          ? Colors.black
+          : FColors.primaryBackground,
+      body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(FSizes.defaultSpace),
+          padding: const EdgeInsets.all(FSizes.defaultSpace),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // BreadCrumbs
-              BreadcrumbWithHeading(
+              const BreadcrumbWithHeading(
                   heading: 'Customers', breadcrumbItems: ['Customers']),
-              Gap(FSizes.spaceBtwSections),
+              const Gap(FSizes.spaceBtwSections),
 
               FRoundedContainer(
                 child: Column(
@@ -33,11 +38,18 @@ class CustomersTabletScreen extends StatelessWidget {
                     // Table Header
                     FTableHeader(
                       showLeftWidget: false,
+                      controller: controller.searchController,
+                      searchOnChanged: (query) => controller.searchItems(query),
                     ),
-                    Gap(FSizes.spaceBtwItems),
+                    const Gap(FSizes.spaceBtwItems),
 
                     // Table
-                    CustomersTable()
+                    Obx(() {
+                      if (controller.isLoading.value) {
+                        return const FLoaderAnimation();
+                      }
+                      return const CustomersTable();
+                    })
                   ],
                 ),
               )

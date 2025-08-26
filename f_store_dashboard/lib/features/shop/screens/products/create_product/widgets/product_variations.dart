@@ -1,6 +1,10 @@
 import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
 import 'package:f_store_dashboard/common/widgets/images/image_uploader.dart';
 import 'package:f_store_dashboard/common/widgets/images/rounded_image.dart';
+import 'package:f_store_dashboard/features/shop/controllers/product/create_product_controller.dart';
+import 'package:f_store_dashboard/features/shop/controllers/product/product_images_controller.dart';
+import 'package:f_store_dashboard/features/shop/controllers/product/product_variations_controller.dart';
+import 'package:f_store_dashboard/features/shop/models/product/product_variations_model.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/enums.dart';
 import 'package:f_store_dashboard/utils/constants/image_strings.dart';
@@ -16,44 +20,60 @@ class ProductVariations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FRoundedContainer(
-      backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? FColors.dark : FColors.white,
-      padding: const EdgeInsets.all(FSizes.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Product Variations',
-                style: Theme.of(context).textTheme.headlineSmall,
+    final controller = Get.put(ProductVariationsController());
+    return Obx(
+      () => CreateProductController.instance.productType.value ==
+              ProductType.variable
+          ? FRoundedContainer(
+              backgroundColor: FHelperFunctions.isDarkMode(context)
+                  ? FColors.dark
+                  : FColors.white,
+              padding: const EdgeInsets.all(FSizes.md),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Product Variations',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      TextButton(
+                          onPressed: () => controller.removeVariations(context),
+                          child: const Text('Remove Variations')),
+                    ],
+                  ),
+                  const Gap(FSizes.spaceBtwItems),
+
+                  // Variations List
+                  if (controller.productVariations.isNotEmpty)
+                    ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: controller.productVariations.length,
+                      separatorBuilder: (_, __) =>
+                          const Gap(FSizes.spaceBtwItems),
+                      itemBuilder: (context, index) {
+                        final variation = controller.productVariations[index];
+                        return _buildVariationTile(
+                            context, index, variation, controller);
+                      },
+                    )
+                  else
+                    // No Variation Message
+                    _buildNoVariationMessage(),
+                ],
               ),
-              TextButton(
-                  onPressed: () {}, child: const Text('Remove Variations')),
-            ],
-          ),
-          const Gap(FSizes.spaceBtwItems),
-
-          // Variations List
-          ListView.separated(
-            shrinkWrap: true,
-            itemCount: 3,
-            separatorBuilder: (_, __) => const Gap(FSizes.spaceBtwItems),
-            itemBuilder: (context, index) {
-              return _buildVariationTile();
-            },
-          ),
-
-          // No Variation Message
-          _buildNoVariationMessage(),
-        ],
-      ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 
-  Widget _buildVariationTile() {
+  Widget _buildVariationTile(
+      BuildContext context,
+      int index,
+      ProductVariationsModel variation,
+      ProductVariationsController controller) {
     return ExpansionTile(
       backgroundColor: FHelperFunctions.isDarkMode(Get.context!)
           ? FColors.darkerGrey
@@ -64,16 +84,23 @@ class ProductVariations extends StatelessWidget {
       childrenPadding: const EdgeInsets.all(FSizes.md),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(FSizes.borderRadiusLg)),
-      title: const Text('Color: Green, Size: Small'),
+      title: Text(variation.attributeValues.entries
+          .map((entry) => '${entry.key}: ${entry.value}')
+          .join(', ')),
       children: [
         // Upload Variation Image
         Obx(
           () => FImageUploader(
-            imageType: ImageType.asset,
+            imageType: variation.image.value.isNotEmpty
+                ? ImageType.network
+                : ImageType.asset,
             right: 0,
             left: 0,
-            imageUrl: FImages.defaultImageIcon,
-            onIconButtonPressed: () {},
+            imageUrl: variation.image.value.isNotEmpty
+                ? variation.image.value
+                : FImages.defaultImageIcon,
+            onIconButtonPressed: () => ProductImagesController.instance
+                .selectVariationImage(variation),
           ),
         ),
         const Gap(FSizes.spaceBtwItems),
@@ -83,6 +110,8 @@ class ProductVariations extends StatelessWidget {
           children: [
             Expanded(
               child: TextFormField(
+                // Use the new controller list with index access
+                controller: controller.stockControllers[index],
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
@@ -90,17 +119,19 @@ class ProductVariations extends StatelessWidget {
                 decoration: const InputDecoration(
                     labelText: 'Stock',
                     hintText: 'Add Stock: Only Numbers Are Allowed'),
+                onChanged: (value) => variation.stock = int.parse(value),
               ),
             ),
             const Gap(FSizes.spaceBtwInputFields),
             Expanded(
               child: TextFormField(
+                // Use the new controller list with index access
+                controller: controller.priceControllers[index],
+                onChanged: (value) => variation.price = double.tryParse(value) ?? 0.0, // Use tryParse
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^\d+\.?\d{0-2}$'),
-                  )
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
                 ],
                 decoration: const InputDecoration(
                     labelText: 'Price',
@@ -110,12 +141,13 @@ class ProductVariations extends StatelessWidget {
             const Gap(FSizes.spaceBtwInputFields),
             Expanded(
               child: TextFormField(
+                // Use the new controller list with index access
+                controller: controller.salePriceControllers[index],
+                onChanged: (value) => variation.salePrice = double.tryParse(value) ?? 0.0, // Use tryParse
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^\d+\.?\d{0-2}$'),
-                  ),
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
                 ],
                 decoration: const InputDecoration(
                     labelText: 'Discount',
@@ -126,6 +158,9 @@ class ProductVariations extends StatelessWidget {
         ),
         const Gap(FSizes.spaceBtwInputFields),
         TextFormField(
+          // Use the new controller list with index access
+          controller: controller.descriptionControllers[index],
+          onChanged: (value) => variation.description = value,
           decoration: const InputDecoration(
               labelText: 'Description',
               hintText: 'Add The Description Of This Variation'),

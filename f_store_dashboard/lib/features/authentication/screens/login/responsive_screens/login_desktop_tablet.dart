@@ -9,7 +9,7 @@ class LoginScreenDesktopTablet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = Theme.of(context).brightness == Brightness.dark;
-    return  FLoginTemplate(
+    return  const FLoginTemplate(
       child: Column(
         children: [
           // Header

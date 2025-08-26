@@ -20,14 +20,14 @@ class FCircularImage extends StatelessWidget {
       this.image,
       this.fit = BoxFit.cover,
       this.isNetworkImage = false,
-      this.padding = FSizes.sm});
+      this.padding = FSizes.sm, this.margin = FSizes.sm});
 
   final BoxFit? fit;
   final String? image;
   final bool isNetworkImage;
   final Color? overlayColor;
   final Color? backgroundColor;
-  final double width, height, padding;
+  final double width, height, padding, margin;
   final Uint8List? memoryImage;
   final File? file;
   final ImageType imageType;
@@ -37,6 +37,7 @@ class FCircularImage extends StatelessWidget {
     return Container(
       width: width,
       height: height,
+      margin: EdgeInsets.all(margin),
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         // IF image background color is null then switch it to light and dark mode color design

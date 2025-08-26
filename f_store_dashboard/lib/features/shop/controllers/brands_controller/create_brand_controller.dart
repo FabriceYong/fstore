@@ -92,8 +92,9 @@ class CreateBrandController extends GetxController {
 
       // Register brand selectedCategories if any
       if (selectedCategories.isNotEmpty) {
-        if (newBrand.id.isEmpty)
+        if (newBrand.id.isEmpty) {
           throw 'Error storing relation data. Please try again';
+        }
 
         for (var category in selectedCategories) {
           final brandCategory = BrandCategoryModel(

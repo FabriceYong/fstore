@@ -1,17 +1,18 @@
 import 'package:f_store_dashboard/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
-import 'package:f_store_dashboard/features/shop/models/product_model/product_model.dart';
-import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_additional_images.dart';
-import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_attributes.dart';
-import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_bottom_navigation_buttons.dart';
-import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_brand.dart';
-import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_categories.dart';
-import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_stock_and_pricing.dart';
-import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_thumbnail_image.dart';
-import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_title_and_desc.dart';
-import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_type_widget.dart';
-import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_variations.dart';
-import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_visibility_widget.dart';
+import 'package:f_store_dashboard/features/shop/controllers/product/product_images_controller.dart'; // Import the controller
+import 'package:f_store_dashboard/features/shop/models/product/product_model.dart';
+import 'package:f_store_dashboard/features/shop/screens/products/edit_product/widgets/product_additional_images.dart';
+import 'package:f_store_dashboard/features/shop/screens/products/edit_product/widgets/product_attributes.dart';
+import 'package:f_store_dashboard/features/shop/screens/products/edit_product/widgets/product_bottom_navigation_buttons.dart';
+import 'package:f_store_dashboard/features/shop/screens/products/edit_product/widgets/product_brand.dart';
+import 'package:f_store_dashboard/features/shop/screens/products/edit_product/widgets/product_categories.dart';
+import 'package:f_store_dashboard/features/shop/screens/products/edit_product/widgets/product_stock_and_pricing.dart';
+import 'package:f_store_dashboard/features/shop/screens/products/edit_product/widgets/product_thumbnail_image.dart';
+import 'package:f_store_dashboard/features/shop/screens/products/edit_product/widgets/product_title_and_desc.dart';
+import 'package:f_store_dashboard/features/shop/screens/products/edit_product/widgets/product_type_widget.dart';
+import 'package:f_store_dashboard/features/shop/screens/products/edit_product/widgets/product_variations.dart';
+import 'package:f_store_dashboard/features/shop/screens/products/edit_product/widgets/product_visibility_widget.dart';
 import 'package:f_store_dashboard/routes/routes.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
@@ -27,9 +28,12 @@ class EditProductMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imagesController =
+        Get.put(ProductImagesController()); // Get the controller instance
     return Scaffold(
-      backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.primaryBackground,
+      backgroundColor: FHelperFunctions.isDarkMode(context)
+          ? Colors.black
+          : FColors.primaryBackground,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(FSizes.defaultSpace),
@@ -98,8 +102,10 @@ class EditProductMobile extends StatelessWidget {
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         const Gap(FSizes.spaceBtwItems),
+                        // Pass the controller's list to the widget
                         ProductAdditionalImages(
-                          additionalProductImageUrls: RxList<String>([]),
+                          additionalProductImageUrls:
+                              imagesController.additionalProductImageUrls,
                         ),
                       ],
                     ),
@@ -111,7 +117,9 @@ class EditProductMobile extends StatelessWidget {
                   const Gap(FSizes.spaceBtwSections),
 
                   // Product Categories
-                  const ProductCategories(),
+                  ProductCategories(
+                    product: product,
+                  ),
                   const Gap(FSizes.spaceBtwSections),
 
                   // Product Visibility
@@ -123,7 +131,9 @@ class EditProductMobile extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const ProductBottomNavigationButtons(),
+      bottomNavigationBar: ProductBottomNavigationButtons(
+        product: product,
+      ),
     );
   }
 }

@@ -49,7 +49,7 @@ class ProductController extends GetxController {
     double largestPrice = 0.0;
 
     // If no variation exists, return the simple price or sale price
-    if (product.productType == ProductType.single.toString()) {
+    if (product.productType == ProductType.single.toString() || product.productVariations!.isNotEmpty) {
       return (product.salePrice > 0 ? product.salePrice : product.price)
           .toString();
     } else {

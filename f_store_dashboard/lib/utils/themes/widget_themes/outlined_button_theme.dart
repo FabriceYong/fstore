@@ -12,7 +12,7 @@ class FOutlineButtonTheme {
       foregroundColor: FColors.dark,
       side: const BorderSide(color: FColors.borderPrimary),
       textStyle: const TextStyle(
-          fontSize: 16, color: FColors.black, fontWeight: FontWeight.w600),
+          fontSize: 16, fontWeight: FontWeight.w600), // Removed color: FColors.black
       padding: const EdgeInsets.symmetric(
           vertical: FSizes.buttonHeight, horizontal: 20),
       shape: RoundedRectangleBorder(
@@ -29,7 +29,7 @@ class FOutlineButtonTheme {
       foregroundColor: FColors.light,
       side: const BorderSide(color: FColors.borderPrimary),
       textStyle: const TextStyle(
-          fontSize: 16, color: FColors.textWhite, fontWeight: FontWeight.w600),
+          fontSize: 16, fontWeight: FontWeight.w600), // Removed color: FColors.textWhite
       padding: const EdgeInsets.symmetric(
           vertical: FSizes.buttonHeight, horizontal: 20),
       shape: RoundedRectangleBorder(

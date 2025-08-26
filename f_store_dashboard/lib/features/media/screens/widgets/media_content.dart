@@ -101,12 +101,15 @@ class FMediaContentWidget extends StatelessWidget {
             }
 
             // Start Loader
-            if (mediaController.loading.value) // && images.isNotEmpty
+            if (mediaController.loading.value) {
+              // && images.isNotEmpty
               return const FLoaderAnimation();
+            }
 
             // If Images returns an empty list
-            if (images.isEmpty)
+            if (images.isEmpty) {
               return _buildEmptyImagesAnimationWidget(context);
+            }
 
             return Column(
               mainAxisSize: MainAxisSize.min,
@@ -145,37 +148,64 @@ class FMediaContentWidget extends StatelessWidget {
                             ),
                           ),
                         )
-                        .toList()),
+                        .toList()), // Correctly close the map().toList() here
 
-                // const Gap(FSizes.spaceBtwSections),
-                if (!mediaController.loading.value)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: FSizes.spaceBtwSections),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: FSizes.buttonWidth,
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(FSizes.sm))),
-                            onPressed: () =>
-                                mediaController.loadMoreMediaImages(),
-                            icon: const Icon(Iconsax.arrow_down),
-                            label: const Text('Load More'),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-              ],
-            );
-          }),
-        ],
-      ),
+                // Load More Button - Updated Logic
+                // Use Obx to react to changes in loading state and hasMoreImages map
+                Obx(() {
+                  // Check if more images exist for the current category
+                  final bool moreImagesAvailable = mediaController
+                          .hasMoreImages[mediaController.selectedPath.value] ??
+                      false;
+                  // Check loading state
+                  final bool isLoading = mediaController.loading.value;
+
+                  // Show button only if more images are available
+                  if (moreImagesAvailable) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: FSizes.spaceBtwSections),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: FSizes.buttonWidth,
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(FSizes.sm))),
+                              // Disable button while loading, otherwise call loadMoreMediaImages
+                              onPressed: isLoading
+                                  ? null
+                                  : () => mediaController.loadMoreMediaImages(),
+                              icon: isLoading
+                                  ? Container(
+                                      // Show loader in button when loading
+                                      width: 24,
+                                      height: 24,
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: const CircularProgressIndicator(
+                                          color: Colors.white, strokeWidth: 3),
+                                    )
+                                  : const Icon(Iconsax.arrow_down),
+                              label:
+                                  Text(isLoading ? 'Loading...' : 'Load More'),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  } else {
+                    // If no more images, return an empty container
+                    return const SizedBox.shrink();
+                  }
+                }), // Correctly close the inner Obx for the button
+              ], // Correctly close the children list for the outer Column
+            ); // Correctly close the outer Column
+          }), // Correctly close the outer Obx
+        ], // Correctly close the children list for the root Column
+      ), // Correctly close the root Column
     );
   }
 

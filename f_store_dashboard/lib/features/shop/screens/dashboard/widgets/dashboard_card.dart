@@ -13,15 +13,16 @@ class FDashboardCard extends StatelessWidget {
       required this.title,
       required this.subTitle,
       required this.stats,
-      this.icon = Iconsax.arrow_up_3,
-      this.color = FColors.success,
+      this.icon = Iconsax.arrow_up_3, // Default icon
+      this.color = FColors.success,    // Default color
       required this.prefixIcon,
-      this.onTap});
+      this.onTap, this.headingColor, this.headingIcon, this.headingIconColor });
 
   final String title, subTitle;
   final IconData icon;
+  final IconData? headingIcon;
   final Widget prefixIcon;
-  final Color color;
+  final Color? color, headingColor, headingIconColor;
   final int stats;
   final void Function()? onTap;
 
@@ -29,10 +30,11 @@ class FDashboardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return FRoundedContainer(
       backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? FColors.black : Colors.white,
+          FHelperFunctions.isDarkMode(context) ? FColors.black : Colors.white, // Revert background
       onTap: onTap,
       padding: const EdgeInsets.all(FSizes.lg),
       child: Column(
+        // Removed crossAxisAlignment: CrossAxisAlignment.start
         children: [
           /// Heading
           Row(
@@ -49,12 +51,17 @@ class FDashboardCard extends StatelessWidget {
           ),
           const Gap(FSizes.spaceBtwSections),
 
+          // Re-add the Row with subtitle and comparison stats
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                subTitle,
-                style: Theme.of(context).textTheme.headlineMedium,
+              Flexible(
+                child: Text(
+                  subTitle,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +74,7 @@ class FDashboardCard extends StatelessWidget {
                         size: FSizes.iconSm,
                       ),
                       Text(
-                        '$stats%',
+                        '$stats%', // Display stats as percentage
                         style: Theme.of(context).textTheme.titleLarge!.apply(
                               color: color,
                               overflow: TextOverflow.ellipsis,
@@ -76,7 +83,7 @@ class FDashboardCard extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    'Compared to Dec 2025',
+                    'Compared to Dec 2025', // Restore hardcoded text
                     style: Theme.of(context).textTheme.labelMedium,
                     overflow: TextOverflow.ellipsis,
                   )

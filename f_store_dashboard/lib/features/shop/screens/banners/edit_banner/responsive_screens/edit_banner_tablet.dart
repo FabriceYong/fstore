@@ -9,12 +9,19 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class EditBannerTablet extends StatelessWidget {
-  const EditBannerTablet({super.key, required this.banner});
+  const EditBannerTablet({super.key, this.banner});
 
-  final BannerModel banner;
+  final BannerModel? banner;
 
   @override
   Widget build(BuildContext context) {
+    if (banner == null) {
+      return const Scaffold(
+        body: Center(
+          child: Text('Error: Banner data is missing.'),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor:
           FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.primaryBackground,
@@ -31,7 +38,7 @@ class EditBannerTablet extends StatelessWidget {
               const Gap(FSizes.spaceBtwItems),
 
               // Form
-              EditBannerForm(banner: banner)
+              EditBannerForm(banner: banner!)
             ],
           ),
         ),

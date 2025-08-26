@@ -45,8 +45,9 @@ class BrandsTabletScreen extends StatelessWidget {
 
                     // Brands Table
                     Obx(() {
-                      if (controller.isLoading.value)
+                      if (controller.isLoading.value) {
                         return const FLoaderAnimation();
+                      }
                       return const BrandsTable();
                     }),
                   ],

@@ -8,6 +8,6 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FSiteTemplate(useLayout: false, desktop: ForgotPasswordDesktopTablet(), mobile: ForgotPasswordMobile(),);
+    return const FSiteTemplate(useLayout: false, desktop: ForgotPasswordDesktopTablet(), mobile: ForgotPasswordMobile(),);
   }
 }

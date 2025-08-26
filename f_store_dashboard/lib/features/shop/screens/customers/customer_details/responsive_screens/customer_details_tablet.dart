@@ -1,5 +1,5 @@
 import 'package:f_store_dashboard/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
-import 'package:f_store_dashboard/data/repositories/authentication/models/user_model.dart';
+import 'package:f_store_dashboard/data/models/user_model.dart';
 import 'package:f_store_dashboard/features/shop/screens/customers/customer_details/widgets/customer_info.dart';
 import 'package:f_store_dashboard/features/shop/screens/customers/customer_details/widgets/customer_orders.dart';
 import 'package:f_store_dashboard/features/shop/screens/customers/customer_details/widgets/shipping_address.dart';
@@ -18,20 +18,21 @@ class CustomerDetailsTablet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.primaryBackground,
-      body:  SingleChildScrollView(
+      backgroundColor: FHelperFunctions.isDarkMode(context)
+          ? Colors.black
+          : FColors.primaryBackground,
+      body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(FSizes.defaultSpace),
+          padding: const EdgeInsets.all(FSizes.defaultSpace),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Breadcrumbs
-              BreadcrumbWithHeading(
+              const BreadcrumbWithHeading(
                   returnToPrevScreen: true,
                   heading: 'James Bond',
                   breadcrumbItems: [FRoutes.customerDetails, 'Details']),
-              Gap(FSizes.spaceBtwSections),
+              const Gap(FSizes.spaceBtwSections),
 
               //Body
               Row(
@@ -41,18 +42,20 @@ class CustomerDetailsTablet extends StatelessWidget {
                     child: Column(
                       children: [
                         // Customer Info
-                        CustomerInfo(customer: customer,),
-                        Gap(FSizes.spaceBtwSections),
+                        CustomerInfo(
+                          customer: customer,
+                        ),
+                        const Gap(FSizes.spaceBtwSections),
 
                         // Shipping Address
-                        ShippingAddress(),
+                        const ShippingAddress(),
                       ],
                     ),
                   ),
-                  Gap(FSizes.spaceBtwSections),
+                  const Gap(FSizes.spaceBtwSections),
 
                   // Right Side Customer Orders
-                  Expanded(flex: 2, child: CustomerOrders())
+                  const Expanded(flex: 2, child: CustomerOrders())
                 ],
               ),
             ],

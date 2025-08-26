@@ -33,7 +33,9 @@ class CategoryController extends FBaseController<CategoryModel> {
   }
 
   void sortByParentName(int sortColumnIndex, bool ascending) {
-    sortByProperty(sortColumnIndex, ascending,
-        (CategoryModel category) => category.name.toLowerCase());
+    sortByProperty(sortColumnIndex, ascending, (CategoryModel category) {
+      final parentCategory = allItems.firstWhereOrNull((item) => item.id == category.parentId);
+      return parentCategory?.name.toLowerCase() ?? '';
+    });
   }
 }

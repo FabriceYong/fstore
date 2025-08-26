@@ -13,7 +13,7 @@ class FPageHeading extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(heading, style: Theme.of(context).textTheme.headlineLarge,),
-        rightSideWidget ?? SizedBox()
+        rightSideWidget ?? const SizedBox()
       ],
     );
   }

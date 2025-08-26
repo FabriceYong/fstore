@@ -91,7 +91,7 @@ class FHeader extends StatelessWidget implements PreferredSizeWidget {
                     : FRoundedImage(
                         imageType:
                             controller.user.value.profilePicture.isNotEmpty
-                                ? ImageType.asset
+                                ? ImageType.network
                                 : ImageType.asset,
                         imageUrl:
                             controller.user.value.profilePicture.isNotEmpty

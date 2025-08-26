@@ -2,8 +2,9 @@ import 'package:f_store_dashboard/features/authentication/screens/forgot_passwor
 import 'package:f_store_dashboard/features/authentication/screens/login/login.dart';
 import 'package:f_store_dashboard/features/authentication/screens/reset_password/reset_password_screen.dart';
 import 'package:f_store_dashboard/features/media/screens/media.dart';
-import 'package:f_store_dashboard/features/personalization/profile/profile.dart';
-import 'package:f_store_dashboard/features/personalization/settings/settings.dart';
+import 'package:f_store_dashboard/features/personalization/screens/profile/profile.dart';
+import 'package:f_store_dashboard/features/personalization/screens/settings/settings.dart';
+import 'package:f_store_dashboard/features/shop/models/banner_model/banner_model.dart';
 import 'package:f_store_dashboard/features/shop/screens/banners/all_banners/banners.dart';
 import 'package:f_store_dashboard/features/shop/screens/banners/create_banner/create_banner.dart';
 import 'package:f_store_dashboard/features/shop/screens/banners/edit_banner/edit_banner.dart';
@@ -80,7 +81,10 @@ class FAppRoutes {
         middlewares: [FRoutesMiddleware()]),
     GetPage(
         name: FRoutes.editBanner,
-        page: () => const EditBannerScreen(),
+        page: () {
+          final banner = Get.arguments as BannerModel;
+          return EditBannerScreen(banner: banner);
+        },
         middlewares: [FRoutesMiddleware()]),
 
     /// Products

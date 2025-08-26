@@ -18,7 +18,7 @@ class MobileLayout extends StatelessWidget {
       appBar: FHeader(
         scaffoldKey: scaffoldKey,
       ),
-      drawer: FSidebar(),
+      drawer: const FSidebar(),
       body: body ?? const SizedBox(),
     );
   }

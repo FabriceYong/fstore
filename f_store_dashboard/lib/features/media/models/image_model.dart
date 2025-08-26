@@ -5,7 +5,6 @@ import 'package:f_store_dashboard/utils/formatters/formatters.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:get/get.dart';
-import 'package:universal_html/html.dart';
 
 class ImageModel {
   String id;

@@ -1,5 +1,5 @@
 import 'package:f_store_dashboard/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
-import 'package:f_store_dashboard/data/repositories/authentication/models/user_model.dart';
+import 'package:f_store_dashboard/features/shop/controllers/customer_controller/customer_details_controller.dart';
 import 'package:f_store_dashboard/features/shop/screens/customers/customer_details/widgets/customer_info.dart';
 import 'package:f_store_dashboard/features/shop/screens/customers/customer_details/widgets/customer_orders.dart';
 import 'package:f_store_dashboard/features/shop/screens/customers/customer_details/widgets/shipping_address.dart';
@@ -9,6 +9,9 @@ import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+
+import '../../../../../../data/models/user_model.dart';
 
 class CustomerDetailsDesktop extends StatelessWidget {
   const CustomerDetailsDesktop({super.key, required this.customer});
@@ -17,6 +20,8 @@ class CustomerDetailsDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CustomerDetailsController());
+    controller.customer.value = customer;
     return Scaffold(
       backgroundColor:
           FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.primaryBackground,
@@ -27,10 +32,10 @@ class CustomerDetailsDesktop extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Breadcrumbs
-              const BreadcrumbWithHeading(
+               BreadcrumbWithHeading(
                   returnToPrevScreen: true,
-                  heading: 'James Bond',
-                  breadcrumbItems: [FRoutes.customerDetails, 'Details']),
+                  heading: customer.fullName,
+                  breadcrumbItems: const [FRoutes.customerDetails, 'Details']),
               const Gap(FSizes.spaceBtwSections),
 
               //Body

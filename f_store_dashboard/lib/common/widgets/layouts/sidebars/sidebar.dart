@@ -1,11 +1,14 @@
 import 'package:f_store_dashboard/common/widgets/images/circular_image.dart';
 import 'package:f_store_dashboard/common/widgets/layouts/sidebars/menu/menu_item.dart';
+import 'package:f_store_dashboard/features/personalization/controllers/settngs_controller/settings_controller.dart';
 import 'package:f_store_dashboard/routes/routes.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
+import 'package:f_store_dashboard/utils/constants/enums.dart';
 import 'package:f_store_dashboard/utils/constants/image_strings.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class FSidebar extends StatelessWidget {
@@ -28,11 +31,37 @@ class FSidebar extends StatelessWidget {
           child: Column(
             children: [
               //Image
-              FCircularImage(
-                image: dark ? FImages.lightAppLogo : FImages.darkAppLogo,
-                backgroundColor: Colors.transparent,
-                width: 100,
-                height: 100,
+              Row(
+                children: [
+                  Obx(
+                    () => FCircularImage(
+                      image: SettingsController
+                              .instance.settings.value.appLogo.isNotEmpty
+                          ? SettingsController.instance.settings.value.appLogo
+                          : dark
+                              ? FImages.lightAppLogo
+                              : FImages.darkAppLogo,
+                      backgroundColor: Colors.transparent,
+                      width: 100,
+                      height: 100,
+                      padding: 0,
+                      margin: FSizes.sm,
+                      imageType: SettingsController
+                              .instance.settings.value.appLogo.isNotEmpty
+                          ? ImageType.network
+                          : ImageType.asset,
+                    ),
+                  ),
+                  Expanded(
+                    child: Obx(
+                      () => Text(
+                        SettingsController.instance.settings.value.appName,
+                        style: Theme.of(context).textTheme.headlineLarge,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const Gap(FSizes.spaceBtwSections),
               Padding(

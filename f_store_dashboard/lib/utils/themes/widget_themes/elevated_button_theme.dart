@@ -16,7 +16,7 @@ class FElevatedButtonTheme {
       side: const BorderSide(color: FColors.primary),
       padding: const EdgeInsets.symmetric(vertical: FSizes.buttonHeight),
       textStyle: const TextStyle(
-          fontSize: 16, color: FColors.textWhite, fontWeight: FontWeight.w600),
+          fontSize: 16, fontWeight: FontWeight.w600), // Removed color: FColors.textWhite
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(FSizes.buttonRadius),
       ),
@@ -35,7 +35,7 @@ class FElevatedButtonTheme {
       padding: const EdgeInsets.symmetric(vertical: FSizes.buttonHeight),
       textStyle: const TextStyle(
         fontSize: 16,
-        color: FColors.textWhite,
+        // Removed color: FColors.textWhite
         fontWeight: FontWeight.w600,
       ),
       shape: RoundedRectangleBorder(

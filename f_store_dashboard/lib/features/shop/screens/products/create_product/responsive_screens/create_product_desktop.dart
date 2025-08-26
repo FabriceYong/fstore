@@ -1,5 +1,6 @@
 import 'package:f_store_dashboard/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
+import 'package:f_store_dashboard/features/shop/controllers/product/product_images_controller.dart';
 import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_additional_images.dart';
 import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_attributes.dart';
 import 'package:f_store_dashboard/features/shop/screens/products/create_product/widgets/product_bottom_navigation_buttons.dart';
@@ -25,9 +26,12 @@ class CreateProductDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final controller = Get.put(CreateProductController());
+    final productImagesController = Get.put(ProductImagesController());
     return Scaffold(
-      backgroundColor:
-          FHelperFunctions.isDarkMode(context) ? Colors.black : FColors.primaryBackground,
+      backgroundColor: FHelperFunctions.isDarkMode(context)
+          ? Colors.black
+          : FColors.primaryBackground,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(FSizes.defaultSpace),
@@ -110,7 +114,13 @@ class CreateProductDesktop extends StatelessWidget {
                             ),
                             const Gap(FSizes.spaceBtwItems),
                             ProductAdditionalImages(
-                              additionalProductImageUrls: RxList<String>([]),
+                              additionalProductImageUrls:
+                                  productImagesController
+                                      .additionalProductImageUrls,
+                              onTapToAddImages: () => productImagesController
+                                  .selectMultipleProductImages(),
+                              onTapToRemoveImage: (index) =>
+                                  productImagesController.removeImage(index),
                             ),
                           ],
                         ),
@@ -128,8 +138,6 @@ class CreateProductDesktop extends StatelessWidget {
                       // Product Visibility
                       const ProductVisibilityWidget(),
                       const Gap(FSizes.spaceBtwSections),
-
-                    
                     ],
                   ))
                 ],

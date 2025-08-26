@@ -94,7 +94,7 @@ abstract class FBaseController<T> extends GetxController {
   }
 
   // Delete Category Confirmation
-  conformDeleteItem(T item) {
+  confirmDeleteItem(T item) {
     FDialogs.defaultDialog(
         context: Get.context!,
         title: 'Delete Item!',

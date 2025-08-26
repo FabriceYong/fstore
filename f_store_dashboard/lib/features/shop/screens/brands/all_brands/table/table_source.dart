@@ -38,14 +38,16 @@ class TableSource extends DataTableSource {
                     : FColors.primaryBackground,
               ),
               const Gap(FSizes.spaceBtwItems),
-              Text(
-                brand.name,
-                style: Theme.of(Get.context!)
-                    .textTheme
-                    .bodyLarge!
-                    .apply(color: FColors.primary),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              Flexible(
+                child: Text(
+                  brand.name,
+                  style: Theme.of(Get.context!)
+                      .textTheme
+                      .bodyLarge!
+                      .apply(color: FColors.primary),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               )
             ],
           ),
@@ -88,13 +90,13 @@ class TableSource extends DataTableSource {
               )
             : const Icon(Iconsax.heart)),
         brand.createdAt != null
-            ? DataCell(Text('Created At: ${brand.formattedCreatedAtDate}'))
+            ? DataCell(Text('Created: ${brand.formattedCreatedAtDate}'))
             : brand.updatedAt != null
-                ? DataCell(Text('Updated At: ${brand.formattedUpdatedAtDate}'))
+                ? DataCell(Text('Updated: ${brand.formattedUpdatedAtDate}'))
                 : const DataCell(Text('')),
         DataCell(FTableActionButtons(
           onEditPressed: () => Get.toNamed(FRoutes.editBrand, arguments: brand),
-          onDeletePressed: () => controller.conformDeleteItem(brand),
+          onDeletePressed: () => controller.confirmDeleteItem(brand),
         ))
       ],
     );

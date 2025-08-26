@@ -25,8 +25,12 @@ class MediaController extends GetxController {
 
   final RxBool loading = false.obs;
 
-  final int initialLoadCount = 20;
-  final int loadMoreCount = 25;
+  // Updated constants
+  final int initialLoadCount = 35;
+  final int loadMoreCount = 30;
+
+  // Track if more images are available per category
+  final RxMap<MediaCategory, bool> hasMoreImages = <MediaCategory, bool>{}.obs;
 
   late DropzoneViewController dropzoneController;
   final RxBool showImagesUploaderSection = false.obs;
@@ -42,81 +46,130 @@ class MediaController extends GetxController {
 
   final MediaRepository mediaRepository = MediaRepository();
 
+  // Helper to get the correct list based on selectedPath
+  RxList<ImageModel> _getTargetList() {
+    switch (selectedPath.value) {
+      case MediaCategory.banners:
+        return allBannerImages;
+      case MediaCategory.brands:
+        return allBrandImages;
+      case MediaCategory.categories:
+        return allCategoryImages;
+      case MediaCategory.products:
+        return allProductImages;
+      case MediaCategory.users:
+        return allUserImages;
+      default:
+        // Should not happen if a category is selected, but return an empty list as fallback
+        return <ImageModel>[].obs;
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Initialize hasMoreImages for all categories
+    for (var category in MediaCategory.values) {
+      if (category != MediaCategory.folders) { // Exclude 'folders' pseudo-category
+        hasMoreImages[category] = true;
+      }
+    }
+  }
+
+
   void getMediaImages() async {
+    // Don't fetch if the category is 'folders'
+    if (selectedPath.value == MediaCategory.folders) return;
+
+    final RxList<ImageModel> targetList = _getTargetList();
+
+    // Only fetch if the list is currently empty (initial load for this category)
+    if (targetList.isNotEmpty) {
+       // If list is not empty, assume it's already loaded, reset loading state if needed
+       if (loading.value) loading.value = false;
+       return;
+    }
+
+
     try {
       loading.value = true;
-
-      final RxList<ImageModel> targetList = <ImageModel>[].obs;
-      if (selectedPath.value == MediaCategory.banners &&
-          allBannerImages.isEmpty) {
-        targetList.value = allBannerImages;
-      } else if (selectedPath.value == MediaCategory.brands &&
-          allBrandImages.isEmpty) {
-        targetList.value = allBrandImages;
-      } else if (selectedPath.value == MediaCategory.categories &&
-          allCategoryImages.isEmpty) {
-        targetList.value = allCategoryImages;
-      } else if (selectedPath.value == MediaCategory.products &&
-          allProductImages.isEmpty) {
-        targetList.value = allProductImages;
-      } else if (selectedPath.value == MediaCategory.users &&
-          allUserImages.isEmpty) {
-        targetList.value = allUserImages;
-      }
+      hasMoreImages[selectedPath.value] = true; // Assume more images initially
 
       final images = await mediaRepository.fetchImagesFromDatabase(
           selectedPath.value, initialLoadCount);
-      targetList.assignAll(
-          images); // assignAll overrides any existing items in the list and replace them with the newly created items
+
+      // Use assignAll for the initial fetch
+      targetList.assignAll(images);
+
+      // Update hasMoreImages based on the fetched count
+      if (images.length < initialLoadCount) {
+        hasMoreImages[selectedPath.value] = false;
+      }
 
       loading.value = false;
     } catch (e) {
       loading.value = false;
+      // Reset hasMore on error? Or leave as true to allow retry? Leaving as true for now.
+      // hasMoreImages[selectedPath.value] = false;
       Snackbars.errorSnackBar(
           title: 'Ohh Snap!',
           message:
-              'Unable to load images, something went wrong. Please try again');
+              'Unable to load initial images, something went wrong. Please try again');
     }
   }
 
   void loadMoreMediaImages() async {
+     // Don't load more if the category is 'folders' or if we know there are no more images
+    if (selectedPath.value == MediaCategory.folders || !(hasMoreImages[selectedPath.value] ?? false)) {
+      return;
+    }
+
+    final RxList<ImageModel> targetList = _getTargetList();
+
+    // Ensure list isn't empty before trying to load more
+    if (targetList.isEmpty) {
+      // Maybe call getMediaImages instead? Or just return? Returning for now.
+      return;
+    }
+
+
     try {
       loading.value = true;
 
-      final RxList<ImageModel> targetList = <ImageModel>[].obs;
-      if (selectedPath.value == MediaCategory.banners &&
-          allBannerImages.isEmpty) {
-        targetList.value = allBannerImages;
-      } else if (selectedPath.value == MediaCategory.brands &&
-          allBrandImages.isEmpty) {
-        targetList.value = allBrandImages;
-      } else if (selectedPath.value == MediaCategory.categories &&
-          allCategoryImages.isEmpty) {
-        targetList.value = allCategoryImages;
-      } else if (selectedPath.value == MediaCategory.products &&
-          allProductImages.isEmpty) {
-        targetList.value = allProductImages;
-      } else if (selectedPath.value == MediaCategory.users &&
-          allUserImages.isEmpty) {
-        targetList.value = allUserImages;
+      // Get the timestamp of the last image currently loaded
+      final DateTime? lastTimestamp = targetList.last.createdAt;
+      if (lastTimestamp == null) {
+         // Handle case where last image has no timestamp (shouldn't happen ideally)
+         loading.value = false;
+         Snackbars.errorSnackBar(title: 'Error', message: 'Cannot determine pagination point.');
+         return;
       }
+
 
       final images = await mediaRepository.loadMoreImagesFromDatabase(
           selectedPath.value,
-          initialLoadCount,
-          targetList.last.createdAt ?? DateTime.now());
-      targetList.addAll(
-          images); // addAll only adds items to a list and doesn't override the existing items
+          loadMoreCount, // Use loadMoreCount here
+          lastTimestamp); // Pass the correct timestamp
+
+      // Use addAll to append new images
+      targetList.addAll(images);
+
+      // Update hasMoreImages based on the fetched count
+      if (images.length < loadMoreCount) {
+        hasMoreImages[selectedPath.value] = false;
+      }
 
       loading.value = false;
-    } catch (e) {
+    } catch (e) { // Add the missing catch block
       loading.value = false;
       Snackbars.errorSnackBar(
           title: 'Ohh Snap!',
           message:
-              'Unable to load images, something went wrong. Please try again');
+              'Unable to load more images, something went wrong. Please try again');
     }
-  }
+  } // Add the missing closing brace for loadMoreMediaImages
+
+  // --- Restore Missing Methods ---
 
   Future<void> selectedLocalImages() async {
     final files = await dropzoneController
@@ -387,4 +440,4 @@ class MediaController extends GetxController {
         ));
     return selectedImages;
   }
-}
+} // Add the missing closing brace for the class

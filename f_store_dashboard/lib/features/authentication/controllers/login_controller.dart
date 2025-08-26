@@ -1,7 +1,9 @@
+import 'package:f_store_dashboard/data/models/user_model.dart';
 import 'package:f_store_dashboard/data/repositories/authentication/authentication_repository.dart';
-import 'package:f_store_dashboard/data/repositories/authentication/models/user_model.dart';
+import 'package:f_store_dashboard/data/repositories/settings_repository/settings_repository.dart';
 import 'package:f_store_dashboard/data/repositories/user/user_repository.dart';
 import 'package:f_store_dashboard/features/authentication/controllers/user_controller.dart';
+import 'package:f_store_dashboard/features/personalization/models/settings_model.dart';
 import 'package:f_store_dashboard/utils/constants/enums.dart';
 import 'package:f_store_dashboard/utils/constants/image_strings.dart';
 import 'package:f_store_dashboard/utils/helpers/network_manager.dart';
@@ -116,7 +118,7 @@ class LoginController extends GetxController {
           id: AuthenticationRepository.instance.authUser!.uid,
           firstName: 'James',
           lastName: 'Bond',
-          userName: 'cwt_fabrice',
+          userName: 'cwf_fabrice',
           email: 'jamesbond@gmail.com',
           role: AppRole.admin,
           createdAt: DateTime.now(),
@@ -124,6 +126,10 @@ class LoginController extends GetxController {
           phoneNumber: '01234569789',
         ),
       );
+
+      // Create settings record in the Firestore
+      final settingsRepository = Get.put(SettingsRepository());
+      await settingsRepository.registerSettings(SettingsModel(appLogo: '', appName: 'My App', taxRate: 0.0, shippingCost: 0.0));
 
       // Stop Loader
       FFullScreenLoader.stopLoading();

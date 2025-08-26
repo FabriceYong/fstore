@@ -45,8 +45,9 @@ class BannersMobileScreen extends StatelessWidget {
 
                     // Table
                     Obx(() {
-                      if (controller.isLoading.value)
+                      if (controller.isLoading.value) {
                         return const FLoaderAnimation();
+                      }
                       return const BannersTable();
                     }),
                   ],

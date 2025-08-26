@@ -100,8 +100,8 @@ class FLoginForm extends StatelessWidget {
                   ),
                 ),
                 onPressed: () => controller.login(),
-                // onPressed: () => controller.registerAdmin(),
-                child: const Text('Sign In'),
+                // child: const Text('Register Admin'),
+                child: const Text('Login'),
               ),
             )
           ],

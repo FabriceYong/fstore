@@ -7,7 +7,6 @@ import 'package:f_store_dashboard/utils/constants/image_strings.dart';
 import 'package:f_store_dashboard/utils/constants/sizes.dart';
 import 'package:f_store_dashboard/utils/device/device_utility.dart';
 import 'package:f_store_dashboard/utils/helpers/helper_functions.dart';
-import 'package:f_store_dashboard/utils/helpers/pricing_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -151,7 +150,7 @@ class OrderItems extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     Text(
-                      '\$${FPricingCalculator.calculateShippingCost(subTotal, '')}',
+                      '\$${order.shipmentCost.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.titleLarge,
                     )
                   ],
@@ -162,7 +161,7 @@ class OrderItems extends StatelessWidget {
                   children: [
                     Text('Tax', style: Theme.of(context).textTheme.titleLarge),
                     Text(
-                      '\$${FPricingCalculator.calculateTax(subTotal, '')}',
+                      '\$${order.taxCost.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
@@ -178,7 +177,7 @@ class OrderItems extends StatelessWidget {
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
                     Text(
-                      '\$${FPricingCalculator.calculateTotalPrice(subTotal, '')}',
+                      '\$${order.totalAmount.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
                   ],

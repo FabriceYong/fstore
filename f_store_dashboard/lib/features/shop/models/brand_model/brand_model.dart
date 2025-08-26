@@ -72,7 +72,11 @@ class BrandModel {
         image: json['Image'],
         isFeatured: json['IsFeatured'],
         productsCount: json['ProductsCount'],
-        createdAt: json['CreatedAt'],
-        updatedAt: json['UpdatedAt']);
+        createdAt: json.containsKey('CreatedAt') && json['CreatedAt'] != null
+            ? (json['CreatedAt'] as Timestamp).toDate()
+            : null,
+        updatedAt: json.containsKey('UpdatedAt') && json['UpdatedAt'] != null
+            ? (json['UpdatedAt'] as Timestamp).toDate()
+            : null);
   }
 }

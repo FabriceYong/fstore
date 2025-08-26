@@ -1,4 +1,6 @@
 import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
+import 'package:f_store_dashboard/common/widgets/schimmers/shimmer_effect.dart';
+import 'package:f_store_dashboard/features/shop/controllers/order_controller/order_controller.dart';
 import 'package:f_store_dashboard/features/shop/models/order_model/order_model.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/enums.dart';
@@ -16,6 +18,8 @@ class OrderInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(OrderController());
+    controller.orderStatus.value = order.status;
     return FRoundedContainer(
       backgroundColor: FHelperFunctions.isDarkMode(context) ? FColors.black : FColors.white,
       padding: const EdgeInsets.all(FSizes.defaultSpace),
@@ -59,30 +63,38 @@ class OrderInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Status'),
-                    FRoundedContainer(
-                      radius: FSizes.cardRadiusSm,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: FSizes.sm),
-                      backgroundColor:
-                          FHelperFunctions.getOrderStatusColor(order.status)
-                              .withOpacity(.1),
-                      child: DropdownButton<OrderStatus>(
-                        padding: const EdgeInsets.symmetric(vertical: 0),
-                        value: OrderStatus.pending,
-                        items: OrderStatus.values.map((OrderStatus status) {
-                          return DropdownMenuItem<OrderStatus>(
-                            value: status,
-                            child: Text(
-                              status.name.capitalize.toString(),
-                              style: TextStyle(
-                                color: FHelperFunctions.getOrderStatusColor(
-                                    order.status),
+                    Obx((){
+                      if(controller.statusLoader.value) return const FShimmerEffect(width: double.infinity, height: 55,);
+                      return FRoundedContainer(
+                        radius: FSizes.cardRadiusSm,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: FSizes.sm),
+                        backgroundColor:
+                            FHelperFunctions.getOrderStatusColor(controller.orderStatus.value)
+                                .withOpacity(.1),
+                        child: DropdownButton<OrderStatus>(
+                          padding: const EdgeInsets.symmetric(vertical: 0),
+                          value: controller.orderStatus.value,
+                          onChanged: (OrderStatus? newValue) {
+                            if(newValue != null){
+                              controller.updateOrderStatus(order, newValue);
+                            }
+                          },
+                          items: OrderStatus.values.map((OrderStatus status) {
+                            return DropdownMenuItem<OrderStatus>(
+                              value: status,
+                              child: Text(
+                                status.name.capitalize.toString(),
+                                style: TextStyle(
+                                  color: FHelperFunctions.getOrderStatusColor(
+                                      controller.orderStatus.value),
+                                ),
                               ),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (OrderStatus? newValue) {},
-                      ),
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    }
                     )
                   ],
                 ),

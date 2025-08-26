@@ -30,7 +30,7 @@ class BannersTable extends StatelessWidget {
                 controller.sortByName(columnIndex, ascending),
           ),
           const DataColumn2(label: Text('Active')),
-          DataColumn2(label: Text('Date')),
+          const DataColumn2(label: Text('Date')),
           const DataColumn2(label: Text('Actions'), fixedWidth: 100),
         ],
         source: BannersRows(),

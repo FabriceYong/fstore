@@ -11,13 +11,13 @@ class LoginScreenMobile extends StatelessWidget {
     final dark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: dark ? Colors.black : Colors.white,
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(FSizes.defaultSpace),
+          padding: EdgeInsets.all(FSizes.defaultSpace),
           child: Column(
             children: [
               /// HEADER
-              const FLoginHeader(),
+              FLoginHeader(),
 
               /// LOGIN FORM
               FLoginForm()

@@ -19,9 +19,21 @@ class BannersRows extends DataTableSource {
     final banner = controller.filteredItems[index];
     return DataRow2(
         selected: controller.selectedRows[index],
-        onTap: () => Get.toNamed(FRoutes.editBanner, arguments: banner),
+        onTap: () => Get.toNamed(FRoutes.editBanner, arguments: banner, parameters: {'bannerId': banner.id}),
         onSelectChanged: (value) =>
             controller.selectedRows[index] = value ?? false,
+        color:
+            WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+          if (states.contains(WidgetState.selected)) {
+            return FHelperFunctions.isDarkMode(Get.context!)
+                ? FColors.primary.withOpacity(.2)
+                : FColors.primary.withOpacity(.1);
+          } else {
+            return FHelperFunctions.isDarkMode(Get.context!)
+                ? Colors.grey.shade800.withOpacity(.3)
+                : Colors.grey.withOpacity(.2);
+          }
+        }),
         cells: [
           DataCell(
             FRoundedImage(
@@ -48,15 +60,14 @@ class BannersRows extends DataTableSource {
                 )
               : const Icon(Iconsax.eye)),
           banner.createdAt != null
-              ? DataCell(Text('Created At: ${banner.formattedCreatedAtDate}'))
+              ? DataCell(Text('Created: ${banner.formattedCreatedAtDate}'))
               : banner.updatedAt != null
-                  ? DataCell(
-                      Text('Updated At: ${banner.formattedUpdatedAtDate}'))
+                  ? DataCell(Text('Updated: ${banner.formattedUpdatedAtDate}'))
                   : const DataCell(Text('')),
           DataCell(FTableActionButtons(
             onEditPressed: () =>
-                Get.toNamed(FRoutes.editBanner, arguments: banner),
-            onDeletePressed: () => controller.conformDeleteItem(banner),
+                Get.toNamed(FRoutes.editBanner, arguments: banner, parameters: {'bannerId': banner.id}),
+            onDeletePressed: () => controller.confirmDeleteItem(banner),
           ))
         ]);
   }

@@ -23,6 +23,18 @@ class CategoryRows extends DataTableSource {
         selected: controller.selectedRows[index],
         onSelectChanged: (value) =>
             controller.selectedRows[index] = value ?? false,
+        onTap: () => Get.toNamed(FRoutes.editCategory,
+            arguments: category, parameters: {'categoryId': category.id}),
+        color:
+            WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+          if (states.contains(WidgetState.selected)) {
+            return FHelperFunctions.isDarkMode(Get.context!)
+                ? FColors.primary.withOpacity(.3) : FColors.primary.withOpacity(1);    
+          }else {
+            return FHelperFunctions.isDarkMode(Get.context!) ? Colors.grey.shade800.withOpacity(.3)
+                    : Colors.grey.withOpacity(.2);
+          }
+        }), 
         cells: [
           DataCell(Row(
             children: [
@@ -60,15 +72,15 @@ class CategoryRows extends DataTableSource {
                 )
               : const Icon(Iconsax.heart)),
           category.createdAt != null
-              ? DataCell(Text('Create At: ${category.formattedCreatedAtDate}'))
+              ? DataCell(Text('Created: ${category.formattedCreatedAtDate}'))
               : category.updatedAt != null
-                  ? DataCell(Text('Updated At: ${category.formattedUpdatedAt}'))
+                  ? DataCell(Text('Updated: ${category.formattedUpdatedAt}'))
                   : const DataCell(Text('')),
           DataCell(
             FTableActionButtons(
                 onEditPressed: () =>
                     Get.toNamed(FRoutes.editCategory, arguments: category),
-                onDeletePressed: () => controller.conformDeleteItem(category)),
+                onDeletePressed: () => controller.confirmDeleteItem(category)),
           )
         ]);
   }

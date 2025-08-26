@@ -138,6 +138,6 @@ class ProductModel {
       productVariations: (data['ProductVariations'] as List<dynamic>)
           .map((e) => ProductVariationsModel.fromJson(e))
           .toList(),
-    );
+    );  
   }
 }

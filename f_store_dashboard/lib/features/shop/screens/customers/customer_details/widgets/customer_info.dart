@@ -1,6 +1,6 @@
 import 'package:f_store_dashboard/common/widgets/containers/rounded_container.dart';
 import 'package:f_store_dashboard/common/widgets/images/rounded_image.dart';
-import 'package:f_store_dashboard/data/repositories/authentication/models/user_model.dart';
+import 'package:f_store_dashboard/data/models/user_model.dart';
 import 'package:f_store_dashboard/utils/constants/colors.dart';
 import 'package:f_store_dashboard/utils/constants/enums.dart';
 import 'package:f_store_dashboard/utils/constants/image_strings.dart';
@@ -33,27 +33,27 @@ class CustomerInfo extends StatelessWidget {
           Row(
             children: [
               FRoundedImage(
-                imageType: ImageType.asset,
+                imageType:customer.profilePicture.isNotEmpty ? ImageType.network : ImageType.asset,
                 padding: 0,
                 backgroundColor: FHelperFunctions.isDarkMode(context)
                     ? FColors.dark
                     : FColors.primaryBackground,
-                imageUrl: FImages.user,
+                imageUrl: customer.profilePicture.isNotEmpty ? customer.profilePicture : FImages.user,
               ),
               const Gap(FSizes.spaceBtwItems),
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                    children: [
                     Text(
-                      'conding_with_f',
+                     customer.fullName,
                       style: Theme.of(context).textTheme.titleLarge,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const Text(
-                      'jamesbond@gmail.com',
+                     Text(
+                      customer.email,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -75,7 +75,7 @@ class CustomerInfo extends StatelessWidget {
               const Gap(FSizes.spaceBtwItems / 2),
               Expanded(
                   child: Text(
-                'cwf',
+                customer.userName,
                 style: Theme.of(context).textTheme.titleMedium,
               ))
             ],
@@ -107,7 +107,7 @@ class CustomerInfo extends StatelessWidget {
               const Gap(FSizes.spaceBtwItems / 2),
               Expanded(
                   child: Text(
-                '+44-568-25885',
+                customer.phoneNumber,
                 style: Theme.of(context).textTheme.titleMedium,
               ))
             ],
@@ -165,7 +165,7 @@ class CustomerInfo extends StatelessWidget {
                       'Registered',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    Text(DateTime.now().toString()),
+                    Text(customer.formattedCreatedAtDate),
                   ],
                 ),
               ),

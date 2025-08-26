@@ -122,7 +122,7 @@ class CreateProductMobile extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: ProductBottomNavigationButtons(),
+      bottomNavigationBar: const ProductBottomNavigationButtons(),
     );
   }
 }

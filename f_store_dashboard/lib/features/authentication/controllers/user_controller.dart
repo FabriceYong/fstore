@@ -1,4 +1,4 @@
-import 'package:f_store_dashboard/data/repositories/authentication/models/user_model.dart';
+import 'package:f_store_dashboard/data/models/user_model.dart';
 import 'package:f_store_dashboard/data/repositories/user/user_repository.dart';
 import 'package:f_store_dashboard/utils/popups/snackbars.dart';
 import 'package:get/get.dart';

@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:f_store_dashboard/common/widgets/containers/circular_container.dart';
 import 'package:f_store_dashboard/common/widgets/icons/circular_icon.dart';
 import 'package:f_store_dashboard/common/widgets/images/circular_image.dart';
 import 'package:f_store_dashboard/common/widgets/images/rounded_image.dart';
@@ -11,23 +12,28 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class FImageUploader extends StatelessWidget {
-  const FImageUploader(
-      {super.key,
-      this.imageUrl,
-      this.memoryImage,
-      this.width = 100,
-      this.height = 100,
-      required this.imageType,
-      this.circular = false,
-      this.icon = Iconsax.edit_2,
-      this.top,
-      this.bottom = 0,
-      this.right,
-      this.left = 0,
-      this.onIconButtonPressed});
+  const FImageUploader({
+    super.key,
+    this.imageUrl,
+    this.memoryImage,
+    this.width = 100,
+    this.height = 100,
+    required this.imageType,
+    this.circular = false,
+    this.icon = Iconsax.edit_2,
+    this.top,
+    this.bottom = 0,
+    this.right,
+    this.left = 0,
+    this.onIconButtonPressed,
+    this.loading = false,
+  });
 
   /// whether to display the image in a circular shape
   final bool circular;
+
+  /// Display Loading effect
+  final bool loading;
 
   /// URL or path of the image to be displayed
   final String? imageUrl;
@@ -95,12 +101,22 @@ class FImageUploader extends StatelessWidget {
           bottom: bottom,
           right: right,
           left: left,
-          child: FCircularIcon(
-              icon: icon,
-              size: FSizes.md,
-              color: FColors.white,
-              onPressed: onIconButtonPressed,
-              backgroundColor: FColors.primary.withOpacity(.9)),
+          child: loading
+              ? const FCircularContainer(
+                  width: FSizes.xl,
+                  height: FSizes.xl,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    backgroundColor: FColors.primary,
+                    color: FColors.white,
+                  ),
+                )
+              : FCircularIcon(
+                  icon: icon,
+                  size: FSizes.md,
+                  color: FColors.white,
+                  onPressed: onIconButtonPressed,
+                  backgroundColor: FColors.primary.withOpacity(.9)),
         )
       ],
     );
